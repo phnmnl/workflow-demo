@@ -1,1 +1,1 @@
-# workflow-demo
+# Microservices-based metabolomics workflow
