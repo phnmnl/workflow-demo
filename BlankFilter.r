@@ -29,21 +29,7 @@ removegrep <- function(x,name) {
   return(x)
   }
 
-#args <- commandArgs(trailingOnly = TRUE)
-
-#hh <- paste(unlist(args),collapse=' ')
-#listoptions <- unlist(strsplit(hh,'--'))[-1]
-#options.args <- sapply(listoptions,function(x){
-         #unlist(strsplit(x, ' '))[-1]
-        #})
-#options.names <- sapply(listoptions,function(x){
- # option <-  unlist(strsplit(x, ' '))[1]
-#})
-#names(options.args) <- unlist(options.names)
-#print(options.args)
-
 samples<-read.table("inputfile.xls",sep='\t',header=T)
-#print(names(samples))
 
 # separate blanks
 Blanks=specgrep(samples,"BLANK")
@@ -51,6 +37,5 @@ samples=removegrep(samples,"BLANK")
 
 to.remove<-AdvancedBlankFilter(Blanks,samples,0.01)
 samples=samples[-to.remove,]
-cat("GJ", "\n")
 
-#write.table(samples,file=args,sep='\t',row.names=F)
+write.table(samples,file="outputfile.xls",sep='\t',row.names=F)
