@@ -29,7 +29,11 @@ removegrep <- function(x,name) {
   return(x)
   }
 
-samples<-read.table("inputfile.xls",sep='\t',header=T)
+args <- commandArgs(trailingOnly = TRUE)
+
+input = args[1]
+output = args[2]
+samples<-read.table(input,sep='\t',header=T)
 
 # separate blanks
 Blanks=specgrep(samples,"BLANK")
@@ -38,4 +42,4 @@ samples=removegrep(samples,"BLANK")
 to.remove<-AdvancedBlankFilter(Blanks,samples,0.01)
 samples=samples[-to.remove,]
 
-write.table(samples,file="outputfile.xls",sep='\t',row.names=F)
+write.table(samples,file=output,sep='\t',row.names=F)
