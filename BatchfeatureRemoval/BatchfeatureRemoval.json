@@ -1,0 +1,20 @@
+{
+        "parents" : ["blank-filter"],
+        "epsilon" : "PT10M",
+        "name" : "batchfeature-removal",
+        "container": {
+                "type": "DOCKER",
+                "image": "farmbio/batchfeatureremoval",
+                 "volumes": [{
+                        "hostPath": "/mnt/container-volumes/data",
+                        "containerPath": "/data",
+                        "mode": "RW"
+                 }]
+        },
+        "cpus": "1",
+        "mem": "256",
+        "command" : "Rscript BatchfeatureRemoval.r /data/output.xls /data/output_1.xls",
+        "owner" : "stephanie@example.com"
+}
+~
+
