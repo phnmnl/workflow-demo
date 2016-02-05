@@ -13,7 +13,7 @@
         },
         "cpus": "1",
         "mem": "256",
-        "command" : "Rscript Splitter.r /data/output_log2transformation.xls \\data\\splitter",
+        "command" : "Rscript Splitter.r /data/output_log2transformation.xls \data\output_splitter",
         "owner" : "stephanie@example.com"
 }
 ~
