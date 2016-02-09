@@ -16,5 +16,5 @@ In this repository we aim to introduce a microservice-based infrastructure for a
 
 ###Continous integration with Jenkins
 
-## How to deploy a microservice workflow with Mantl
+## How to deploy a microservices workflow with Mantl
 
