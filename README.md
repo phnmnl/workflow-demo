@@ -58,7 +58,37 @@ $ docker run -v /home/workflow-demo/log2transformation/data:/data log2transforma
 ```
 ###Share your microservice source code on GitHub
 
+When you are satisfied with your Docker image you may want to share or store your code on GitHub. This is easly done using some basic git commands. 
 
+First you have to create your destnation repository on GitHub. Once done you need to clone your repository to your local host using the git command *clone*.
+
+```
+$ git clone https://github.com/your/repository
+```
+
+Next up is to copy your Dockerfile and your R script into the repository. Move into your repository and copy using the *cp* command. The -r flag means copy recurrsive, meaning that all your files in the folder will be copied.
+
+```
+$ cp -r path/to/files/* .
+```
+Add the files to your repository so that they will be tracked.
+
+```
+$ git add log2transformation Dockerfile
+```
+
+Record the changes made, while adding a message.
+
+```
+$ git commit -m "Upload Docker image files"
+```
+
+Upload your changes.
+
+```
+$ git push
+```
 ###Continous integration with Jenkins
 
+If you further want to upload your image on [DockerHub] (https://hub.docker.com/) you first need to register an account on both DockerHub and Jenkins. Once done you mayb create a freestyle project on Jenkins.
 ## How to deploy a microservices workflow with Mantl
