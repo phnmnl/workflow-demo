@@ -9,7 +9,7 @@ In this repository we aim to introduce a microservice-based infrastructure for a
 >If you are not familiar with the concept of Docker or Mesosphere, please take a brief look at the following websites: [What is Docker?] (https://www.docker.com/what-docker),  [Meet Jenkins] (https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [Mantl.io] (https://mantl.io/).
 
 <p align="center">
-  <img src="http://i68.tinypic.com/oaovte.png" width="350"/>
+  <img src="http://i65.tinypic.com/352exkx.png" width="350"/>
 </p>
 
 The analysis workflow can be seen above, containing the following processes:
