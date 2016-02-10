@@ -14,12 +14,12 @@ In this repository we aim to introduce a microservice-based infrastructure for a
 
 The analysis workflow can be seen above, containing the following processes:
 
- - BlankFilter - For contaminants removal
- - BatchfeatureRemoval - Removal of batch specific features
- - log2-transformation - Transforming the data to the log2 base scale
- - Splitter - Splits the data according to sample names
- - CV - Calculates the coefficient of variation
- - FeatureSelection - Extracting features with low CV
+ - **BlankFilter** - For contaminants removal
+ - **BatchfeatureRemoval** - Removal of batch specific features
+ - **log2transformation** - Transforming the data to the log2 base scale
+ - **Splitter** - Splits the data according to sample names
+ - **CV** - Calculates the coefficient of variation
+ - **FeatureSelection** - Extracting features with low CV
 
 ## Prerequisites
 
