@@ -8,6 +8,19 @@ In this repository we aim to introduce a microservice-based infrastructure for a
 >**Note**
 >If you are not familiar with the concept of Docker or Mesosphere, please take a brief look at the following websites: [What is Docker?] (https://www.docker.com/what-docker),  [Meet Jenkins] (https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [Mantl.io] (https://mantl.io/).
 
+<p align="center">
+  <img src="http://i68.tinypic.com/oaovte.png" width="350"/>
+</p>
+
+The analysis workflow can be seen above, containing the following processes:
+
+ - BlankFilter - For contaminants removal
+ - BatchfeatureRemoval - Removal of batch specific features
+ - log2-transformation - Transforming the data to the log2 base scale
+ - Splitter - Splits the data according to sample names
+ - CV - Calculates the coefficient of variation
+ - FeatureSelection - Extracting features with low CV
+
 ## Prerequisites
 
 ## How to develop a simple R-based microservice
