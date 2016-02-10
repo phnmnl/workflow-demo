@@ -19,6 +19,7 @@ The analysis workflow can be seen above, containing the following processes:
  - **log2transformation** - Transforming the data to the log2 base scale
  - **Splitter** - Splits the data according to sample names
  - **CV** - Calculates the coefficient of variation
+ - **Merger** - Merges several files into one
  - **FeatureSelection** - Extracting features with low CV
 
 ## Prerequisites
