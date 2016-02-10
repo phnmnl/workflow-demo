@@ -1,0 +1,20 @@
+{
+        "parents" : ["CV"],
+        "epsilon" : "PT10M",
+        "name" : "merger",
+        "container": {
+                "type": "DOCKER",
+                "image": "farmbio/merger",
+                 "volumes": [{
+                        "hostPath": "/mnt/container-volumes/data",
+                        "containerPath": "/data",
+                        "mode": "RW"
+                 }]
+        },
+        "cpus": "1",
+        "mem": "256",
+        "command" : "Rscript Merger.r /data/output_CV.xls /data/output_merger.xls",
+        "owner" : "stephanie@example.com"
+}
+~
+
