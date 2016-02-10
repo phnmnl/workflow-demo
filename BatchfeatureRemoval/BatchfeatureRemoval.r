@@ -12,7 +12,7 @@ remove.batchfeatures <- function(samples) {
   idx_1=coverage(B1_samples,0.8)
   idx_2=coverage(B2_samples,0.8)
   idx_3=coverage(B3_samples,0.8)
-  idx_4=coverage(B4_samples,0.9)
+  idx_4=coverage(B4_samples,0.8)
   
   presence=matrix(0,dim(samples)[1],4)
   presence[idx_1,1] = 1
