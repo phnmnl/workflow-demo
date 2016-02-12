@@ -6,7 +6,7 @@
 	"container": {
     		"type": "DOCKER",
     		"docker": {
-      			"image": "ipython/notebook",
+      			"image": "jupyter/minimal-notebook",
       			"network": "BRIDGE",
 			"portMappings": [{
                     		"containerPort": 8888,
