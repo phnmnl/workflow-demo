@@ -13,7 +13,7 @@
         },
         "cpus": "1",
         "mem": "256",
-        "command" : "Rscript BatchfeatureRemoval.r /data/output.xls /data/output_1.xls",
+        "command" : "Rscript BatchfeatureRemoval.r /data/output_BlankFilter.xls /data/output_BatchfeatureRemoval.xls",
         "owner" : "stephanie@example.com"
 }
 ~

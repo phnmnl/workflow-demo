@@ -13,6 +13,6 @@
  	},
  	"cpus": "1",
  	"mem": "256",   
-	"command" : "Rscript BlankFilter.r /data/data.xls /data/output.xls",  
+	"command" : "Rscript BlankFilter.r /data/data.xls /data/output_BlankFilter.xls",  
 	"owner" : "stephanie@example.com"
 }

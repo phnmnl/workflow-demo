@@ -13,7 +13,7 @@
         },
         "cpus": "1",
         "mem": "256",
-        "command" : "Rscript CV.r /data/output \\data\\cv",
+        "command" : "Rscript CV.r /data/output_splitter /data/output_CV",
         "owner" : "stephanie@example.com"
 }
 ~

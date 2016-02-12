@@ -13,7 +13,7 @@
         },
         "cpus": "1",
         "mem": "256",
-        "command" : "Rscript Merger.r /data/output_CV.xls /data/output_merger.xls",
+        "command" : "Rscript Merger.r /data/output_CV /data/output_Merger.xls",
         "owner" : "stephanie@example.com"
 }
 ~
