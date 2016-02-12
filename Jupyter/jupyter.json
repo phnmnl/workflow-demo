@@ -12,11 +12,7 @@
                     		"containerPort": 8888,
                     		"hostPort": 0,
                     		"protocol": "tcp"
-                	}],
-			"parameters": [
-                		{ "key": "env", "value": "PASSWORD=phenomenal" },
-                		{ "key": "env", "value": "USE_HTTP=1" }
-            		]
+                	}]
     		}
 	}		
 }
