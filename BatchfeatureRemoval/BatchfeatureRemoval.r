@@ -7,18 +7,18 @@ remove.batchfeatures <- function(samples) {
   B1_samples=samples[,grep("B1", names(samples))]
   B2_samples=samples[,grep("B2", names(samples))]
   B3_samples=samples[,grep("B3", names(samples))]
-  B4_samples=samples[,grep("B4", names(samples))]
+  #B4_samples=samples[,grep("B4", names(samples))]
   
   idx_1=coverage(B1_samples,0.8)
   idx_2=coverage(B2_samples,0.8)
   idx_3=coverage(B3_samples,0.8)
-  idx_4=coverage(B4_samples,0.8)
+  #idx_4=coverage(B4_samples,0.8)
   
-  presence=matrix(0,dim(samples)[1],4)
+  presence=matrix(0,dim(samples)[1],3)
   presence[idx_1,1] = 1
   presence[idx_2,2] = 1
   presence[idx_3,3] = 1
-  presence[idx_4,4] = 1
+  #presence[idx_4,4] = 1
   idx=0
   for (i in 1:dim(samples)[1]) {
     row=presence[i,]

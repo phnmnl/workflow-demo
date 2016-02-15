@@ -10,7 +10,7 @@ cvs<-read.table(input2,sep='\t',header=F)
 cv = apply(cvs,1,median,na.rm=T)
 
 idx = which(cv < 0.3)
+cat("Number of remaining features: ", length(idx))
 samples = samples[idx,]
 
 write.table(samples,file=output,sep='\t',row.names=F)
-
