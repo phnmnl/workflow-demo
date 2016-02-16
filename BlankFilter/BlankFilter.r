@@ -40,6 +40,7 @@ Blanks=specgrep(samples,"BLANK")
 samples=removegrep(samples,"BLANK")
 
 to.remove<-AdvancedBlankFilter(Blanks,samples,0.01)
+cat("Number of filtered features: ", length(to.remove), "\n")
 samples=samples[-to.remove,]
 
 write.table(samples,file=output,sep='\t',row.names=F)
