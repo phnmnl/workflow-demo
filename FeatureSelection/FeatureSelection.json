@@ -13,7 +13,7 @@
         },
         "cpus": "1",
         "mem": "256",
-        "command" : "Rscript FeatureSelection.r /data/output_log2transformation.xls /data/output_Merger.xls",
+        "command" : "Rscript FeatureSelection.r /data/output_log2transformation.xls /data/output_Merger.xls /data/output_FeatureSelection.xls",
         "owner" : "stephanie@example.com"
 }
 ~
