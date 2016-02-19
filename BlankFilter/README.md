@@ -7,3 +7,17 @@ In this microservice we aim to remove the contaminants detected in the blanks, f
 **Input:** .xls file containing samples as columns
 
 **Output:** A .xls file with contaminant filtered samples as columns
+
+##Run Blankfilter locally
+
+Build your image, using the following command. Use the -t flag to tag it with any desired name.
+
+```
+$ docker build -t blankfilter .
+```
+
+To run the service you need to provide it with the name of your input and output files and you need to add a data volume to your image containging your input file. To add/create a volume you use the -v flag followed by the path/to/your/file:path/in/image
+
+```
+$ docker run -v /home/workflow-demo/BlankFilter/data:/data blankfilter /data/inputdata.xls /data/output_blankfilter.xls
+```
