@@ -17,5 +17,5 @@ $ docker build -t splitter .
 To run the service you need to provide it with the name of your input and output files and you need to add a data volume to your image containging your input file. To add/create a volume you use the -v flag followed by the path/to/your/file:path/in/image
 
 ```
-$ docker run -v /home/workflow-demo/BlankFilter/data:/data log2transformation /data/output_log2transformation.xls /data/output_splitter.xls
+$ docker run -v /home/workflow-demo/data:/data log2transformation /data/output_log2transformation.xls /data/output_splitter
 ```
