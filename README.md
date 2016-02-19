@@ -104,5 +104,7 @@ $ git push
 ```
 ###Continous integration with Jenkins
 
-If you further want to upload your image on [DockerHub] (https://hub.docker.com/) you first need to register an account on both DockerHub and Jenkins. Once done you mayb create a freestyle project on Jenkins.
+If you further want to upload your image on [DockerHub] (https://hub.docker.com/) and have continous integration using Jenkins, you first need to register an account DockerHub and Jenkins respectively. Once this is done you can start with creating your project in Jenkins. For continous integration between GitHub and DockerHub you will need one Jenkins item per microservice.
+
+In the Jenkins items configurations you need to provide the url for your GitHub project. You further needs to choose the build trigger "Build when change is pushed to GitHub", since you want your changes to be integrated in DockerHub. When building you intially want your Jenkins action to Create/build your image and then further push your image to your DockerHub repository. Make sure that the images tag is consitent throughout the actions. When everything is filled in correctly and saved, cross your fingers and push the "Star building now" button. To see the console output, you can enter the current building action and you will find a button for this on your left.
 ## How to deploy a microservices workflow with Mantl
