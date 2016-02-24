@@ -3,24 +3,10 @@
 Microservices is a software architecture style in which complex applications are divided into smaller, more narrow services. These constricted processes are independently deployable and compatible with one another like building blocks. In this manner, these blocks can be combined in multiple ways, creating pipelines of actions.
 
 
-In this repository we aim to introduce a microservice-based infrastructure for analysis of metabolomics data. The data used has been provided by the [CARAMBA] (http://www.medsci.uu.se/caramba/) team at Uppsala University and the main products used in the analsysis workflow are Docker, Jenkins and Mantl.
+In this repository we aim to introduce a microservice-based infrastructure for analysis of metabolomics data. The data used has been provided by the [CARAMBA] (http://www.medsci.uu.se/caramba/) team at Uppsala University and the main products used in the analsysis workflow are [Docker] (https://www.docker.com/what-docker), [Jenkins] (https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [MANTL] (https://mantl.io/).
 
 >**Note**
->If you are not familiar with the concept of Docker or Mesosphere, please take a brief look at the following websites: [What is Docker?] (https://www.docker.com/what-docker),  [Meet Jenkins] (https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [Mantl.io] (https://mantl.io/).
-
-<p align="center">
-  <img src="http://i65.tinypic.com/352exkx.png" width="350"/>
-</p>
-
-The analysis workflow can be seen above, containing the following processes:
-
- - **BlankFilter** - For contaminants removal
- - **BatchfeatureRemoval** - Removal of batch specific features
- - **log2transformation** - Transforming the data to the log2 base scale
- - **Splitter** - Splits the data according to sample names
- - **CV** - Calculates the coefficient of variation
- - **Merger** - Merges several files into one
- - **FeatureSelection** - Extracting features with low CV
+>If you are not familiar with the concept of Docker or Mesosphere, please take a brief look at the following websites: [What is Docker?] (https://www.docker.com/what-docker),  [Meet Jenkins] (https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [mantl.io] (https://mantl.io/).
 
 ## Prerequisites
 
@@ -107,4 +93,21 @@ $ git push
 If you further want to upload your image on [DockerHub] (https://hub.docker.com/) and have continous integration using Jenkins, you first need to register an account DockerHub and Jenkins respectively. Once this is done you can start with creating your project in Jenkins. For continous integration between GitHub and DockerHub you will need one Jenkins item per microservice.
 
 In the Jenkins items configurations you need to provide the url for your GitHub project. You further needs to choose the build trigger "Build when change is pushed to GitHub", since you want your changes to be integrated in DockerHub. When building you intially want your Jenkins action to Create/build your image and then further push your image to your DockerHub repository. Make sure that the images tag is consitent throughout the actions. When everything is filled in correctly and saved, cross your fingers and push the "Star building now" button. To see the console output, you can enter the current building action and you will find a button for this on your left.
-## How to deploy a microservices workflow with Mantl
+
+## How to deploy MANTL
+```
+git clone https://github.com/CiscoCloud/mantl.git
+cd mantl
+git checkout 1.0.2
+./security-setup
+wget https://raw.githubusercontent.com/phnmnl/workflow-demo/master/Mantl/gce.tf
+#edit cluster name
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+ssh-keygen -t rsa
+ssh-add ~/.ssh/id_rsa
+#copy phenomenal credentials in home folder
+terraform get
+terraform plan
+terraform apply
+```
