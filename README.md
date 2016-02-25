@@ -9,13 +9,30 @@ In this repository we aim to introduce a microservice-based infrastructure for a
 >If you are not familiar with the concept of Docker or Mesosphere, please take a brief look at the following websites: [What is Docker?] (https://www.docker.com/what-docker),  [Meet Jenkins] (https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [mantl.io] (https://mantl.io/).
 
 ## Prerequisites
-* Please download and import our [VirtualBox](https://www.virtualbox.org/) image: [microservices-workshop.ova](https://www.dropbox.com/s/42olu24n1nmq6x4/microservices-workshop.ova?dl=0).
-
->This is a configured Ubuntu 14.04 LTS with all of the software you need in this tutorial: [Terraform](https://www.terraform.io/), [MANTL dependecies](https://github.com/CiscoCloud/mantl/blob/master/requirements.txt), [Jenkins](https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [Docker](https://www.docker.com/what-docker).
 
 * Please sign up on [DockerHub](https://hub.docker.com/).
 * Please sign up on [GitHub](https://github.com).
 * Please make sure that your [Google Cloud Platform](https://cloud.google.com/) account has write access to the [PhenoMeNal](https://console.cloud.google.com/compute/instances?project=phenomenal-1145) project. In addition, you will need a *Phenomenal-credentials.json* file that will be distributed the day of the workshop, in order to fire up VMs using Terraform.
+* Please download and import our [VirtualBox](https://www.virtualbox.org/) image: [microservices-workshop.ova](https://www.dropbox.com/s/42olu24n1nmq6x4/microservices-workshop.ova?dl=0). In this tutorial we assume that you run all of the commands using this image, so please make sure to import it and to configure it properly. 
+
+>This is a configured Ubuntu 14.04 LTS with all of the software you need in this tutorial: [Terraform](https://www.terraform.io/), [MANTL dependecies](https://github.com/CiscoCloud/mantl/blob/master/requirements.txt), [Jenkins](https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [Docker](https://www.docker.com/what-docker).
+
+Once you imported the image in VirtualBox you will need to open a terminal and generate an ssh-key.
+
+```bash
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+ssh-keygen -t rsa
+```
+
+Furthermore, you will have to setup your git user.
+
+```bash
+git config --global user.email "myname@example.com"
+git config --global user.name "My Name"
+```
+
+Finally, please copy the *Phenomenal-credentials.json* file under the home directory `/home/phenomenal`.
 
 ## How to develop a simple R-based microservice
 
@@ -102,30 +119,89 @@ If you further want to upload your image on [DockerHub] (https://hub.docker.com/
 In the Jenkins items configurations you need to provide the url for your GitHub project. You further needs to choose the build trigger "Build when change is pushed to GitHub", since you want your changes to be integrated in DockerHub. When building you intially want your Jenkins action to Create/build your image and then further push your image to your DockerHub repository. Make sure that the images tag is consitent throughout the actions. When everything is filled in correctly and saved, cross your fingers and push the "Star building now" button. To see the console output, you can enter the current building action and you will find a button for this on your left.
 
 ## How to deploy MANTL
-```
+[MANTL](http://mantl.io/) is a modern platform for rapidly deploying globally distributed services. The MANTL project defines a set of [Terraform](https://www.terraform.io/) and [Ansible](https://www.ansible.com/) configuration files to rapidly deploy a microservices infrastructure on many cloud providers. In this section we cover how to deploy a MANTL cluster on the PhenoMeNal project in the Google Cloud Engine (GCE).
+
+>Before to continue please take a brief look to the [MANTL architecture](https://github.com/CiscoCloud/mantl/blob/master/README.md#architecture).
+
+First of all you need to get MANTL, which is distributed through GitHub. Please clone the official MANTL repository and locate into it.
+
+```bash
 git clone https://github.com/CiscoCloud/mantl.git
 cd mantl
+```
+
+>**N.B.** We assume that you will run all of the following commands in the mantl directory.
+
+It is good practice to never run the current version of any product that is distributed through a git repository. This applies to MANTL as well. Therefore, we want to checkout a stable version of MANTL.
+
+```bash
 git checkout 1.0.2
-./security-setup
-wget https://raw.githubusercontent.com/phnmnl/workflow-demo/master/Mantl/gce.tf
-#edit cluster name
-mkdir ~/.ssh
-chmod 700 ~/.ssh
-ssh-keygen -t rsa
+```
+
+First of all we need fire up the VMs on GCE. MANTL uses Terraform to provide cloud hosts provisioning, on multiple cloud providers. This is done through the definition of several Terraform modules, that make MANTL deployment simple and repeatable. However some minimal configuration it is needed (e.g. number of controllers, edges and workers, credentials etc.). For this tutorial we prepared a Terraform configuration file [gce.tf](https://github.com/phnmnl/workflow-demo/blob/master/mantl/gce.tf) that you can download and use. This file needs to be copied in the MANTL home directory, so you can just run the following command.
+
+```bash
+https://raw.githubusercontent.com/phnmnl/workflow-demo/master/mantl/gce.tf
+```
+
+In *gce.tf* we define a small development cluster with one control node, one edge node and two resource/worker nodes. You can learn how to define such file reading the [MANTL GCE documentation](http://microservices-infrastructure.readthedocs.org/en/latest/getting_started/gce.html). 
+
+Since in this tutorial session many people are going to deploy their own MANTL cluster we need you to customize the cluster name, in order to avoid collisions. Please locate and edit the following lines in the *gce.tf* file before to proceed.
+
+```bash
+variable "long_name" {default = "myname-mantl"} #please customize this with your name
+variable "short_name" {default = "myname"} #please customize this with your name
+```
+
+We are almost ready to fire up the machines, but we need a further very important step. In the cloud ssh access to the VMs is passwordless. Therefore, your ssh key needs to be injected in the VMs. The *gce.tf* file is configured to inject *~/.ssh/id_rsa* in the VMs, hence you will have to add this key to the authentication agent, running the following command.
+
+```bash
 ssh-add ~/.ssh/id_rsa
-#copy phenomenal credentials in home folder
-terraform get
-terraform plan
-terraform apply
-ansible all -m ping
+```
+
+Now we can run the following commands to provision the infrastructure on GCE. 
+
+```bash
+terraform get # to get the required modules
+terraform plan # to see what is going to be created on GCE
+terraform apply # to provision the infrastructure on GCE. Go grab a coffee. 
+```
+
+If everything went fine, you should be able to ping the instances through Ansible.
+
+```bash
+ansible all -m ping # VMs needs some time to start, if it fails try again after a while
+```
+
+Now the infrastructure is running on GCE (VMs, network, public IPs and DNS records). However, we need to install and configure all of the software, required by MANTL, on the VMs. Luckly, MANTL comes with ansible playbook that do this job.
+
+First, we need to upgrade all of the packages on the VMs.
+
+```bash
 ansible-playbook playbooks/upgrade-packages.yml
+```
+
+MANTL comes with many components, hence we might want to install different subsets of these for different use cases. This is done by defining roles in a root Ansible playbook. We prepared one that you can use for this tutorial. Please download it in the *mantl* folder running the following command.
+
+```bash
 wget https://raw.githubusercontent.com/phnmnl/workflow-demo/master/Mantl/phenomenal.yml
+```
+
+Again, to avoid collisions with other users that are running their own cluster on the PhenoMeNal project, we need you to customize this file. Please locate and edit the following line in your *phenomenal.yml* file. 
+
+```bash
+traefik_marathon_domain: myname.phenomenal.cloud
+```
+
+>**N.B.** it is very important that you substitute *myname* with the same name you have used for the *"short_name"* variable in the *gce.tf* file. If you fail to do so, the edge nodes will not work properly. 
+
+```
+./security-setup
 #customize the domain name
 ansible-playbook -e @security.yml phenomenal.yml
 ansible 'role=edge' -s -m service -a 'name=traefik state=restarted'
 
-git config --global user.email "myname@example.com"
-git config --global user.name "My Name"
+
 
 source bin/set_env.sh
 bin/marathon_submit.sh Jupyter/jupyter.json
