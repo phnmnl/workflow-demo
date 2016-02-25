@@ -15,7 +15,7 @@ In this repository we aim to introduce a microservice-based infrastructure for a
 
 * Please sign up on [DockerHub](https://hub.docker.com/).
 * Please sign up on [GitHub](https://github.com).
-* Please make sure that your [Google Cloud Platform](https://cloud.google.com/) account has write access to the [PhenoMeNal](console.cloud.google.com/compute/instances?project=phenomenal-1145) project. In addition, you will need a *Phenomenal-credentials.json* file that will be distributed the day of the workshop, in order to fire up VMs using Terraform.
+* Please make sure that your [Google Cloud Platform](https://cloud.google.com/) account has write access to the [PhenoMeNal](https://console.cloud.google.com/compute/instances?project=phenomenal-1145) project. In addition, you will need a *Phenomenal-credentials.json* file that will be distributed the day of the workshop, in order to fire up VMs using Terraform.
 
 ## How to develop a simple R-based microservice
 
