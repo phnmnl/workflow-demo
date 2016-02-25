@@ -15,6 +15,7 @@ In this repository we aim to introduce a microservice-based infrastructure for a
 * Please make sure that your [Google Cloud Platform](https://cloud.google.com/) account has write access to the [PhenoMeNal](https://console.cloud.google.com/compute/instances?project=phenomenal-1145) project. In addition, you will need a *Phenomenal-credentials.json* file that will be distributed the day of the workshop, in order to fire up VMs using Terraform.
 * Please download and import our [VirtualBox](https://www.virtualbox.org/) image: [microservices-workshop.ova](https://www.dropbox.com/s/42olu24n1nmq6x4/microservices-workshop.ova?dl=0). In this tutorial we assume that you run all of the commands using this image, so please make sure to import it and to configure it properly. 
 
+>**Note**
 >This is a configured Ubuntu 14.04 LTS with all of the software you need in this tutorial: [Terraform](https://www.terraform.io/), [MANTL dependecies](https://github.com/CiscoCloud/mantl/blob/master/requirements.txt), [Jenkins](https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [Docker](https://www.docker.com/what-docker).
 
 Once you imported the image in VirtualBox you will need to open a terminal and generate an ssh-key.
@@ -121,6 +122,7 @@ In the Jenkins items configurations you need to provide the url for your GitHub 
 ## How to deploy MANTL
 [MANTL](http://mantl.io/) is a modern platform for rapidly deploying globally distributed services. The MANTL project defines a set of [Terraform](https://www.terraform.io/) and [Ansible](https://www.ansible.com/) configuration files to rapidly deploy a microservices infrastructure on many cloud providers. In this section we cover how to deploy a MANTL cluster on the PhenoMeNal project in the Google Cloud Engine (GCE).
 
+>**Note**
 >Before to continue please take a brief look to the [MANTL architecture](https://github.com/CiscoCloud/mantl/blob/master/README.md#architecture).
 
 First of all you need to get MANTL, which is distributed through GitHub. Please clone the official MANTL repository and locate into it.
@@ -222,6 +224,7 @@ ansible 'role=edge' -s -m service -a 'name=traefik state=restarted'
 ## Deploy long-lasting microservices on Marathon
 Now that you have your MANTL cluster running, you may want to deploy some services on that. In this section we cover how to run long-lasting services through the [Marathon](https://mesosphere.github.io/marathon/) REST API. As example we will run a Jupyter server that has previously been wrapped in a Docker image.
 
+>**Note**
 >Before to continue you may want to read a bit about [Marathon](https://mesosphere.github.io/marathon/).
 
 First, please clone this repository and locate into it.
@@ -281,5 +284,7 @@ exit # closes the ssh connection
 ```
 
 ## Deploy microservices workflows using Chronos
-We prepared a Jupyter interactive notebook that you can use to get started with Chronos. You can download it [here](https://raw.githubusercontent.com/phnmnl/workflow-demo/master/Jupyter/Workflow.ipynb), and upload it to the Jupyter server that you previously deployed on MANTL. Before going through that, please read a bit about [Chronos](https://mesos.github.io/chronos/).
+We prepared a Jupyter interactive notebook that you can use to get started with Chronos. You can download it [here](https://raw.githubusercontent.com/phnmnl/workflow-demo/master/Jupyter/Workflow.ipynb), and upload it to the Jupyter server that you previously deployed on MANTL. 
 
+>**Note**
+>Before going through the notebook, please read a bit about [Chronos](https://mesos.github.io/chronos/).
