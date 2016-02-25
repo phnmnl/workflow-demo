@@ -109,7 +109,7 @@ If you further want to upload your image on [DockerHub] (https://hub.docker.com/
 To create a new Jenkins item push the "Create new item" button in the top left corner. 
 
 <p align="center">
-  <img src="http://i63.tinypic.com/2mpec5c.png" width="750"/>
+  <img src="http://i67.tinypic.com/2qkrw3k.png" width="750"/>
 </p>
 
 Choose "Freestyle project" and name your item.
@@ -121,7 +121,7 @@ Choose "Freestyle project" and name your item.
 In the next step you will find a long list of settings. First, pass the URL to your GitHub project and check the Git box below Source Code Management.
 
 <p align="center">
-  <img src="http://i65.tinypic.com/2d1hfo.png" width="750"/>
+  <img src="http://i63.tinypic.com/2zzqddk.png" width="750"/>
 </p>
 
 
@@ -140,7 +140,7 @@ Add "Push image" as a second Docker command, passing again the name of your Dock
 Finally, push save. your will now be redirected to the items main page. To start the building push "Build now" in the top left corner (The rebuilding/updating will be done automatically after the initial build).
 
 <p align="center">
-  <img src="http://i64.tinypic.com/2pq7r6s.png" width="750"/>
+  <img src="http://i63.tinypic.com/qn5oav.png" width="750"/>
 </p>
 
 ## How to deploy a microservices workflow with Mantl
