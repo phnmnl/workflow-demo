@@ -122,4 +122,14 @@ ansible-playbook playbooks/upgrade-packages.yml
 wget https://raw.githubusercontent.com/phnmnl/workflow-demo/master/Mantl/phenomenal.yml
 #customize the domain name
 ansible-playbook -e @security.yml phenomenal.yml
+ansible 'role=edge' -s -m service -a 'name=traefik state=restarted'
+
+git config --global user.email "myname@example.com"
+git config --global user.name "My Name"
+
+source bin/set_env.sh
+bin/marathon_submit.sh Jupyter/jupyter.json
+ssh centos@control.myname.phenomenal.cloud
+sudo chown centos /mnt/container-volumes/jupyter/
+#Upload notebook
 ```
