@@ -129,4 +129,7 @@ git config --global user.name "My Name"
 
 source bin/set_env.sh
 bin/marathon_submit.sh Jupyter/jupyter.json
+ssh centos@control.myname.phenomenal.cloud
+sudo chown centos /mnt/container-volumes/jupyter/
+#Upload notebook
 ```
