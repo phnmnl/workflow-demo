@@ -178,7 +178,7 @@ Now the infrastructure is running on GCE (VMs, network, public IPs and DNS recor
 First, we need to upgrade all of the packages on the VMs.
 
 ```bash
-ansible-playbook playbooks/upgrade-packages.yml
+ansible-playbook playbooks/upgrade-packages.yml # go grab a coffee
 ```
 
 MANTL comes with many components, hence we might want to install different subsets of these for different use cases. This is done by defining roles in a root Ansible playbook. We prepared one that you can use for this tutorial. Please download it in the *mantl* folder running the following command.
@@ -195,14 +195,29 @@ traefik_marathon_domain: myname.phenomenal.cloud
 
 >**N.B.** it is very important that you substitute *myname* with the same name you have used for the *"short_name"* variable in the *gce.tf* file. If you fail to do so, the edge nodes will not work properly. 
 
-```
+Now, before to install the software defined in *phenomenal.yml*, we need to setup security and define a password for our cluster. You can do this using the *security-setup* script.
+
+```bash
 ./security-setup
-#customize the domain name
-ansible-playbook -e @security.yml phenomenal.yml
+```
+
+Finally, we are ready to install the sofware via Ansible. Please run the following command.
+
+```bash
+ansible-playbook -e @security.yml phenomenal.yml # time for another coffee
+```
+
+If everything went fine you should be able to access the MANTL UI at: *https://control.yourname.phenomenal.cloud/ui/*.
+
+If you have a warning under the *Traefik* service, run the following command. 
+
+```bash
 ansible 'role=edge' -s -m service -a 'name=traefik state=restarted'
+```
 
+>We opend a ticket for this issue (https://github.com/CiscoCloud/mantl/issues/1073), and it is hopefully going to be fixed soon. 
 
-
+```
 source bin/set_env.sh
 bin/marathon_submit.sh Jupyter/jupyter.json
 ssh centos@control.myname.phenomenal.cloud
