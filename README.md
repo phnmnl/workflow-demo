@@ -281,5 +281,5 @@ exit # closes the ssh connection
 ```
 
 ## Deploy microservices workflows using Chronos
-We prepared a Jupyther interactive notebook that you can use to get started with Chronos. You can download it [here](https://raw.githubusercontent.com/phnmnl/workflow-demo/master/Jupyter/Workflow.ipynb), and upload it to the Jupyter server that you previously deployed on MANTL. Before going through that, please read a bit about [Chronos](https://mesos.github.io/chronos/).
+We prepared a Jupyter interactive notebook that you can use to get started with Chronos. You can download it [here](https://raw.githubusercontent.com/phnmnl/workflow-demo/master/Jupyter/Workflow.ipynb), and upload it to the Jupyter server that you previously deployed on MANTL. Before going through that, please read a bit about [Chronos](https://mesos.github.io/chronos/).
 
