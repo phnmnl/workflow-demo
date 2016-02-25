@@ -219,7 +219,7 @@ ansible 'role=edge' -s -m service -a 'name=traefik state=restarted'
 
 >We opend a ticket for this issue (https://github.com/CiscoCloud/mantl/issues/1073), and it is hopefully going to be fixed soon. 
 
-## Deploy services on MANTL
+## Deploy long-lasting microservices on Marathon
 Now that you have your MANTL cluster running, you may want to deploy some services on that. In this section we cover how to run long-lasting services through the [Marathon](https://mesosphere.github.io/marathon/) REST API. As example we will run a Jupyter server that has previously been wrapped in a Docker image.
 
 >Before to continue you may want to read a bit about [Marathon](https://mesosphere.github.io/marathon/).
@@ -279,4 +279,6 @@ ssh centos@control.myname.phenomenal.cloud
 sudo chown centos /mnt/container-volumes/jupyter/
 exit # closes the ssh connection
 ```
+
+## Deploy microservices workflows using Chronos
 
