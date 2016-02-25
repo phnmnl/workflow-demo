@@ -106,45 +106,41 @@ $ git push
 
 If you further want to upload your image on [DockerHub] (https://hub.docker.com/) and have continous integration using Jenkins, you first need to register an account DockerHub and Jenkins respectively. Once this is done you can start with creating your project in Jenkins. For continous integration between GitHub and DockerHub you will need one Jenkins item per microservice.
 
-To create a new Jenkins item push the "Create new item" button in the top left corner (mind that the screenshots are in Swedish). 
+To create a new Jenkins item push the "Create new item" button in the top left corner. 
 
 <p align="center">
-  <img src="http://i65.tinypic.com/2145ixt.png" width="750"/>
+  <img src="http://i63.tinypic.com/2mpec5c.png" width="750"/>
 </p>
 
 Choose "Freestyle project" and name your item.
 
 <p align="center">
-  <img src="http://i66.tinypic.com/2tyqq.jpg" width="750"/>
+  <img src="http://i64.tinypic.com/14se62r.png" width="750"/>
 </p>
 
-In the next step you will find a long list of settings. First, pass the URL to your GitHub project and check the Git box below source code management (Källskodshantering).
+In the next step you will find a long list of settings. First, pass the URL to your GitHub project and check the Git box below Source Code Management.
 
 <p align="center">
-  <img src="http://i66.tinypic.com/vq1grr.png" width="750"/>
+  <img src="http://i65.tinypic.com/2d1hfo.png" width="750"/>
 </p>
 
 
 To make the integration automatic, check the "Build when a change is pushed to GitHub" box and below "Build" choose "Execute Docker command" and add "Create/add image" as the first building-step. Add the context folder (the name of the GitHub folder of your item) and name the Docker image.
 
 <p align="center">
-  <img src="http://i65.tinypic.com/rsc2vp.png" width="750"/>
-</p>
-
-<p align="center">
-  <img src="http://i65.tinypic.com/2hwjlog.png" width="750"/>
+  <img src="http://i64.tinypic.com/2mo4bat.png" width="750"/>
 </p>
 
 Add "Push image" as a second Docker command, passing again the name of your Docker image and the Docker regirty URL. For this step you will also need a ssh key, which can be generated in DockerHub.
 
 <p align="center">
-  <img src="http://i63.tinypic.com/2hf5fzl.png" width="750"/>
+  <img src="http://i67.tinypic.com/2nja42e.png" width="750"/>
 </p>
 
-Finally, push save. your will now be redirected to the items main page. To start the building push "Start building now" in the top left corner (The rebuilding/updating will be done automatically after the initial build).
+Finally, push save. your will now be redirected to the items main page. To start the building push "Build now" in the top left corner (The rebuilding/updating will be done automatically after the initial build).
 
 <p align="center">
-  <img src="http://i64.tinypic.com/2w7kcps.png" width="750"/>
+  <img src="http://i64.tinypic.com/2pq7r6s.png" width="750"/>
 </p>
 
 ## How to deploy a microservices workflow with Mantl
