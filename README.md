@@ -131,7 +131,7 @@ To make the integration automatic, check the "Build when a change is pushed to G
   <img src="http://i64.tinypic.com/2mo4bat.png" width="750"/>
 </p>
 
-Add "Push image" as a second Docker command, passing again the name of your Docker image and the Docker regirty URL. For this step you will also need a ssh key, which can be generated in DockerHub.
+Add "Push image" as a second Docker command, passing again the name of your Docker image and the Docker registry URL.
 
 <p align="center">
   <img src="http://i67.tinypic.com/2nja42e.png" width="750"/>
