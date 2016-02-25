@@ -2,11 +2,11 @@ variable "control_count" {default = 1}
 variable "datacenter" {default = "gce"}
 variable "edge_count" {default = 1}
 variable "image" {default = "centos-7-v20160119"}
-variable "long_name" {default = "mantl-060-RC3"}
-variable "short_name" {default = "mantl060rc3"}
+variable "long_name" {default = "myname-mantl"} #please customize this with your name
+variable "short_name" {default = "myname"} #please customize this with your name
 variable "ssh_key" {default = "~/.ssh/id_rsa.pub"}
 variable "ssh_user" {default = "centos"}
-variable "worker_count" {default = 3}
+variable "worker_count" {default = 2}
 variable "zones" {
   default = "europe-west1-b"
 }
@@ -38,6 +38,7 @@ module "control-nodes" {
   count = "${var.control_count}"
   datacenter = "${var.datacenter}"
   image = "${var.image}"
+  machine_type = "n1-standard-1"
   network_name = "${module.gce-network.network_name}"
   #network_name = "${terraform_remote_state.gce-network.output.network_name}"
   role = "control"
@@ -52,6 +53,7 @@ module "edge-nodes" {
   count = "${var.edge_count}"
   datacenter = "${var.datacenter}"
   image = "${var.image}"
+  machine_type = "n1-standard-1"
   network_name = "${module.gce-network.network_name}"
   #network_name = "${terraform_remote_state.gce-network.output.network_name}"
   role = "edge"
@@ -66,7 +68,7 @@ module "worker-nodes" {
   count = "${var.worker_count}"
   datacenter = "${var.datacenter}"
   image = "${var.image}"
-  machine_type = "n1-highcpu-2"
+  machine_type = "n1-standard-2"
   network_name = "${module.gce-network.network_name}"
   #network_name = "${terraform_remote_state.gce-network.output.network_name}"
   role = "worker"
@@ -86,11 +88,11 @@ module "cloud-dns" {
   source = "./terraform/gce/dns"
   control_count = "${var.control_count}"
   control_ips = "${module.control-nodes.gce_ips}"
-  domain = "ph.farmbio.uu.se"
+  domain = "phenomenal.cloud"
   edge_count = "${var.edge_count}"
   edge_ips = "${module.edge-nodes.gce_ips}"
   lb_ip = "${module.network-lb.public_ip}"
-  managed_zone = "phnmnl-uu"
+  managed_zone = "phenomenal-cloud"
   short_name = "${var.short_name}"
   subdomain = ".${var.short_name}"
   worker_count = "${var.worker_count}"
