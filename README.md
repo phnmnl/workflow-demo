@@ -275,7 +275,7 @@ The format of this json is defined in the [Marathon REST API documentation](http
 
 [Traefik](https://github.com/containous/traefik) is a reverse proxy that runs on the edge nodes, and it provides access to the services deployed via Marathon. Please read a bit about that. If everithing went fine, you should be able to figure out the front end URL of your Jupyter deployment from the Traefik UI (which is linked in the MANTL UI).
 
-*N.B.* Due to an issue (https://github.com/CiscoCloud/mantl/issues/1142), the Jupyter working directory won't be writable on GlusterFS. To fix this we need to ssh into a node and change the ownership of it. 
+**N.B.** Due to an issue (https://github.com/CiscoCloud/mantl/issues/1142), the Jupyter working directory won't be writable on GlusterFS. To fix this we need to ssh into a node and change the ownership of it. 
 
 ```
 ssh centos@control.myname.phenomenal.cloud
