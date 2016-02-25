@@ -47,14 +47,14 @@ samples[is.na(samples)]=0
 write.table(samples,file=output,sep='\t',row.names=F)
 ```
 
-In the Dockerfile you first provide which base image that you want to start **FROM**. If doing a R-based service, like we are, the base image *r-base* is a good one to start from. Further you provide the **MAINTAINER**, youn **ADD** your R script and **ENTERYPOINT**, which tells the image what action to do.
+In the Dockerfile you first provide which base image that you want to start **FROM**. If doing a R-based service, like we are, the base image *r-base* is a good one to start from. Further you provide the **MAINTAINER**, you **ADD** your R script and **ENTRYPOINT**, which tells the image what action to do.
 
 ```Docker
 FROM r-base
 MAINTAINER Stephanie Herman, stephanie.herman.3820@student.uu.se
 
 ADD log2transformation.r /
-ENTRYPOINT ["Rscript", "log2transformation.r"] 
+ENTRYPOINT ["Rscript", "log2transformation.r"]
 ```
 
 Before sharing your docker image on GitHub you may want to check that it does what it is supposed to do. In order to do that you first need to build your image, using the following command. To tag your image the -t flag may be used, followed by the name you desire.
@@ -72,7 +72,7 @@ $ docker run -v /home/workflow-demo/log2transformation/data:/data log2transforma
 ```
 ###Share your microservice source code on GitHub
 
-When you are satisfied with your Docker image you may want to share or store your code on GitHub. This is easly done using some basic git commands. 
+When you are satisfied with your Docker image you may want to share or store your code on GitHub. This is easly done using some basic git commands.
 
 First you have to create your destnation repository on GitHub. Once done you need to clone your repository to your local host using the git command *clone*.
 
@@ -108,3 +108,19 @@ If you further want to upload your image on [DockerHub] (https://hub.docker.com/
 
 In the Jenkins items configurations you need to provide the url for your GitHub project. You further needs to choose the build trigger "Build when change is pushed to GitHub", since you want your changes to be integrated in DockerHub. When building you intially want your Jenkins action to Create/build your image and then further push your image to your DockerHub repository. Make sure that the images tag is consitent throughout the actions. When everything is filled in correctly and saved, cross your fingers and push the "Star building now" button. To see the console output, you can enter the current building action and you will find a button for this on your left.
 ## How to deploy a microservices workflow with Mantl
+
+
+## Virtual box image with Ubuntu - Docker - Jenkins
+
+To create the Microservices cloud you require the following:
+
+Terraform
+Mantl
+etc .........
+
+We have prepared an VirtualBox Ubuntu image with all prerequisit software installed:
+
+https://drive.google.com/file/d/0By9qLHz4UHg7eEpPOTNMdFZVcUk/view?usp=sharing
+
+( VirtualBox installation: https://www.virtualbox.org/wiki/Downloads )
+
