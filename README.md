@@ -207,7 +207,9 @@ Finally, we are ready to install the sofware via Ansible. Please run the followi
 ansible-playbook -e @security.yml phenomenal.yml # time for another coffee
 ```
 
-If everything went fine you should be able to access the MANTL UI at: *https://control.yourname.phenomenal.cloud/ui/*.
+If everything went fine you should be able to access the MANTL UI at: *https://control.yourname.phenomenal.cloud/ui/*. 
+
+>To access the MANTL UI add a https exception to your browser, and log in as admin using the password that you previously chose.
 
 If you have a warning under the *Traefik* service, run the following command. 
 
@@ -217,10 +219,64 @@ ansible 'role=edge' -s -m service -a 'name=traefik state=restarted'
 
 >We opend a ticket for this issue (https://github.com/CiscoCloud/mantl/issues/1073), and it is hopefully going to be fixed soon. 
 
+## Deploy services on MANTL
+Now that you have your MANTL cluster running, you may want to deploy some services on that. In this section we cover how to run long-lasting services through the [Marathon](https://mesosphere.github.io/marathon/) REST API. As example we will run a Jupyter server that has previously been wrapped in a Docker image.
+
+>Before to continue you may want to read a bit about [Marathon](https://mesosphere.github.io/marathon/).
+
+First, please clone this repository and locate into it.
+
+```bash
+git clone https://github.com/phnmnl/workflow-demo.git
+cd workflow-demo
 ```
-source bin/set_env.sh
+
+We wrapped the Marathon submit REST call in a small script: [marathon_submit.sh](https://github.com/phnmnl/workflow-demo/blob/master/bin/marathon_submit.sh). You can use it to deploy Jupyter on your MANTL cluster running the following commands.
+
+```bash
+source bin/set_env.sh #you will asked to enter your control node URL, and admin password
 bin/marathon_submit.sh Jupyter/jupyter.json
+```
+
+The jupyter.json file is sent to Marathon through the REST API, and it defines the application that we are going yo deploy.
+
+```json
+{
+	"cpus": 0.25, 
+	"mem": 128,
+	"id": "jupyter",
+	"instances": 1,
+	"labels": {"traefik.frontend.entryPoints":"http,https,ws"},
+	"container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "jupyter/minimal-notebook",
+      "network": "BRIDGE",
+			"privileged": true,
+			"portMappings": [{
+        "containerPort": 8888,
+        "hostPort": 0,
+        "protocol": "tcp"
+      }]
+    },
+    "volumes": [{
+      "containerPath": "/home/jovyan/work",
+      "hostPath": "/mnt/container-volumes/jupyter",
+      "mode": "RW"
+    }]
+  }
+}
+```
+
+The format of this json is defined in the [Marathon REST API documentation](https://mesosphere.github.io/marathon/docs/rest-api.html). An important remark is that we mount the jupytet working directory under the `/mnt/container-volumes` folder. This is the location where the [GlusterFS](https://www.gluster.org/) distributed filesystem is mounted. Doing so, the Jupyter working directory will be accessible by other microservices, that can potentially run on other resource nodes. 
+
+[Traefik](https://github.com/containous/traefik) is a reverse proxy that runs on the edge nodes, and it provides access to the services deployed via Marathon. Please read a bit about that. If everithing went fine, you should be able to figure out the front end URL of your Jupyter deployment from the Traefik UI (which is linked in the MANTL UI).
+
+*N.B.* Due to an issue (https://github.com/CiscoCloud/mantl/issues/1142), the Jupyter working directory won't be writable on GlusterFS. To fix this we need to ssh into a node and change the ownership of it. 
+
+```
 ssh centos@control.myname.phenomenal.cloud
 sudo chown centos /mnt/container-volumes/jupyter/
-#Upload notebook
+exit # closes the ssh connection
 ```
+
