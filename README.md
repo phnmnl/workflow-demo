@@ -117,4 +117,9 @@ ssh-add ~/.ssh/id_rsa
 terraform get
 terraform plan
 terraform apply
+ansible all -m ping
+ansible-playbook playbooks/upgrade-packages.yml
+wget https://raw.githubusercontent.com/phnmnl/workflow-demo/master/Mantl/phenomenal.yml
+#customize the domain name
+ansible-playbook -e @security.yml phenomenal.yml
 ```
