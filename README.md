@@ -86,46 +86,40 @@ $ docker build -t log2transformation .
 
 In the previous command we build the image, naming it *log2transformation*, and specifying the current directory as the build context. To successfully run this command, it is very important that the build context, the current directory, contains both the *Dockerfile* and the *log2transformation.r* script. If everything works fine it will say that the image was successfully built.
 
-The `docker run` command serves to run a service that has been previously built. 
+The `docker run` command serves to run a service that has been previously built. You can use this [input data](https://raw.githubusercontent.com/phnmnl/workflow-demo/master/data/log2_input.xls) to try out the following command.
 
 ```
-$ docker run -v /host/directory/data:/data log2transformation /data/inputdata_.xls /data/output.xls
+$ docker run -v /host/directory/data:/data log2transformation /data/log2_input.xls /data/log2_output.xls
 ```
 
-To run your service you need to provide it with the name of your input and output files and you need to add a data volume to your image containging your input file. To add/create a volume you use the -v flag followed by the path/to/your/file:path/in/image.
+In the previous command we use the `-v` argument to specify a directory on our host machine, that will be mount on the Docker container. This directory is supposed to contain the [log2_input.xls](https://raw.githubusercontent.com/phnmnl/workflow-demo/master/data/log2_input.xls) file. Then we specify the name of the container that we aim to run (*log2transformation*), and the arguments that will be passed to the entry point command. We mounted the host direcory under */data* in the Docker container, hence we use the arguments to instruct the R script to read/write the input from/to it.    
+
+You can read more on how to develope Docker images on the Docker [documentation](https://docs.docker.com/). 
 
 ###Share your microservice source code on GitHub
 
-When you are satisfied with your Docker image you may want to share or store your code on GitHub. This is easly done using some basic git commands.
+When you are satisfied with your Docker image, it is good practice to share the Dockerfile and and all of the Docker context on GitHub. This can be easly done using some basic git commands.
 
-First you have to create your destnation repository on GitHub. Once done you need to clone your repository to your local host using the git command *clone*.
+First you need to [create a repository on GitHub](https://help.github.com/articles/create-a-repo/), and to [clone the repository](https://help.github.com/articles/cloning-a-repository/) to your local host. Next up, following our previour R-based example, is to copy your Dockerfile and your R script into the repository folder that you just cloned.
 
-```
-$ git clone https://github.com/your/repository
-```
-
-Next up is to copy your Dockerfile and your R script into the repository. Move into your repository and copy using the *cp* command. The -r flag means copy recurrsive, meaning that all your files in the folder will be copied.
-
-```
-$ cp -r path/to/files/* .
-```
-Add the files to your repository so that they will be tracked.
+Then, locate into the repository, and add the files to be tracked.
 
 ```
 $ git add log2transformation Dockerfile
 ```
 
-Record the changes made, while adding a message.
+Commit the changes, adding a message.
 
 ```
-$ git commit -m "Upload Docker image files"
+$ git commit -m "docker image files"
 ```
 
-Upload your changes.
+Push your changes to GitHub.
 
 ```
 $ git push
 ```
+
 ###Continous integration with Jenkins
 
 If you further want to upload your image on [DockerHub] (https://hub.docker.com/) and have continous integration using Jenkins, you first need to register an account DockerHub and Jenkins respectively. Once this is done you can start with creating your project in Jenkins. For continous integration between GitHub and DockerHub you will need one Jenkins item per microservice.
