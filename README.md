@@ -98,36 +98,28 @@ You can read more on how to develope Docker images on the Docker [documentation]
 
 ###Share your microservice source code on GitHub
 
-When you are satisfied with your Docker image you may want to share or store your code on GitHub. This is easly done using some basic git commands.
+When you are satisfied with your Docker image, it is good practice to share the Dockerfile and and all of the code to build it on GitHub. This can be easly done using some basic git commands.
 
-First you have to create your destnation repository on GitHub. Once done you need to clone your repository to your local host using the git command *clone*.
+First you need to [create a repository on GitHub](https://help.github.com/articles/create-a-repo/), and [clone the repository](https://help.github.com/articles/cloning-a-repository/) to your local host. Next up, following our previour R-based example, is to copy your Dockerfile and your R script into the repository folder that you just cloned.
 
-```
-$ git clone https://github.com/your/repository
-```
-
-Next up is to copy your Dockerfile and your R script into the repository. Move into your repository and copy using the *cp* command. The -r flag means copy recurrsive, meaning that all your files in the folder will be copied.
-
-```
-$ cp -r path/to/files/* .
-```
-Add the files to your repository so that they will be tracked.
+Then, locate into the repository, and add the files to be tracked.
 
 ```
 $ git add log2transformation Dockerfile
 ```
 
-Record the changes made, while adding a message.
+Commit the changes, adding a message.
 
 ```
-$ git commit -m "Upload Docker image files"
+$ git commit -m "docker image files"
 ```
 
-Upload your changes.
+Push your changes to GitHub.
 
 ```
 $ git push
 ```
+
 ###Continous integration with Jenkins
 
 If you further want to upload your image on [DockerHub] (https://hub.docker.com/) and have continous integration using Jenkins, you first need to register an account DockerHub and Jenkins respectively. Once this is done you can start with creating your project in Jenkins. For continous integration between GitHub and DockerHub you will need one Jenkins item per microservice.
