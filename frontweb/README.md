@@ -1,26 +1,28 @@
 
-## Phenomenal Service front webserver and home
+## Phenomenal Service Front Webserver and Home
 
-Dockercontainer with NGINX php-enabled webserver containing service webpage
+This is a Dockercontainer with NGINX php-enabled webserver including the Phenomenal home webpages
 
-<strong>Input:</strong> bla
+Container is built from richarvey/nginx-php-fpm
 
-## Header 2
+Local web is copied into container webroot
 
-Text
+Pass environment variable <code>JUPYTER_HREF</code> with link to Jupyter service
 
+## Build
 ```
-$ docker build -t frontweb .
-```
-
-```
-$ docker run --name frontweb -p 7777:80 -d frontweb
+$ docker build -t farmbio/frontweb .
 ```
 
-To run the service with local html files (debug/development):
+## Run
+```
+$ docker run --name frontweb -e JUPYTER_HREF=http://www.bla.html -p 80:80 -d farmbio/frontweb
+```
+
+## Run the service with local html files (development):
 
 ```
-$ docker run --name frontweb -p 7777:80 -v ~/projekt/docker/frontweb/html:/usr/share/nginx/html:ro -d frontweb
+$ docker run --name frontweb -e JUPYTER_HREF=http://www.bla.html -p 7777:80 -v ~/projekt/phenomenal/workflow-demo/frontweb/html:/usr/share/nginx/html:ro -d farmbio/frontweb
 ```
 
 
