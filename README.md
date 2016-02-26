@@ -126,7 +126,7 @@ $ git push
 
 In the VM image that we provided in the prerequisites section, there is a Jenkins server running on [http://localhost:8080/](http://localhost:8080/).
 
-A Jenkins item defines the step to perform a build of an appliance. To create a new Jenkins item push the "Create new item" button in the top left corner. 
+A Jenkins item defines how to perform a build of an appliance. To create a new Jenkins item click on "New item". 
 
 <p align="center">
   <img src="http://i67.tinypic.com/2qkrw3k.png" width="750"/>
@@ -138,14 +138,15 @@ Choose "Freestyle project" and name your item.
   <img src="http://i64.tinypic.com/14se62r.png" width="750"/>
 </p>
 
-In the next step you will find a long list of settings. First, pass the URL to your GitHub project and check the Git box below Source Code Management.
+In the next step you will find a long list of settings. Check the GitHub project checkbox, and insert the URL to your repository. Then, firther down, select Git under source management and insert the repository URL again. This second setting is very important, as the URL that you insert here will be used by Jenkins to clone your repository. 
 
 <p align="center">
   <img src="http://i63.tinypic.com/2zzqddk.png" width="750"/>
 </p>
 
+To make the integration automatic, check the "Build when a change is pushed to GitHub". In this way Jenkins will expose a *webhook* that GitHub can use to trigger the build. This means that you need to [configure the Jenkins webhook on GitHub](http://learning-continuous-deployment.github.io/jenkins/github/2015/04/17/github-jenkins/). For the purpose of this tutorial you can skip this, and trigger the build manually. 
 
-To make the integration automatic, check the "Build when a change is pushed to GitHub" box and below "Build" choose "Execute Docker command" and add "Create/add image" as the first building-step. Add the context folder (the name of the GitHub folder of your item) and name the Docker image.
+To configure this item to build your image, click on "Add build step", choose "Execute Docker command", and select the "Create/build image" command. Add the "Build context folder", that is the folder where the Docker context is save. Setting this field to "$WORKSPACE" is enough if you saved the Docker context in the root of your repository. If you saved the Docker context in a different folder, you need to specify the path to it (e.g. "$WORKSPACE/context"). It is also very important to name the "Tag of the resulting docker image" properly. In fact, to successfully push to DockerHub, the tag will have to be in the form: '<dockerhub-user>/servicename'.
 
 <p align="center">
   <img src="http://i64.tinypic.com/2mo4bat.png" width="750"/>
