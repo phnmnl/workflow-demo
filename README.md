@@ -20,6 +20,7 @@ The main products used here are [Docker] (https://www.docker.com/what-docker), [
 - [How to deploy MANTL](#how-to-deploy-mantl)
 - [Deploy long-lasting microservices on Marathon](#deploy-long-lasting-microservices-on-marathon)
 - [Deploy microservices workflows using Chronos](#deploy-microservices-workflows-using-chronos)
+- [How to destroy a MANTL cluster](#how-to-destroy-a-mantl-cluster) 
 
 ## Prerequisites
 
@@ -265,7 +266,7 @@ Finally, we are ready to install the sofware via Ansible. Please run the followi
 ansible-playbook -e @security.yml phenomenal.yml # time for another coffee
 ```
 
-If everything went fine you should be able to access the MANTL UI at: *https://control.yourname.phenomenal.cloud/ui/*. 
+If everything went fine you should be able to reach the MANTL UI at: *https://control.yourname.phenomenal.cloud/ui/*. 
 
 >To access the MANTL UI add a https exception to your browser, and log in as admin using the password that you previously chose.
 
@@ -344,3 +345,11 @@ We prepared a Jupyter interactive notebook that you can use to get started with 
 
 >**Note**
 >Before going through the notebook, please read a bit about [Chronos](https://mesos.github.io/chronos/).
+
+## How to destroy a MANTL cluster
+
+When you are done with your testing, you can run the following command to delete your MANTL cluster. 
+
+`terraform destroy`
+
+It is very important that you don't leave your cluster up and running, if you are not using it, otherwise we will waste GCE credits. 
