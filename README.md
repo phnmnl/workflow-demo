@@ -3,22 +3,24 @@
 Microservices is a software architecture style in which complex applications are divided into smaller, more narrow services. These constricted processes are independently deployable and compatible with one another like building blocks. In this manner, these blocks can be combined in multiple ways, creating pipelines of actions.
 
 
-In this repository we aim to introduce a microservice-based infrastructure for analysis of metabolomics data. The data used has been provided by the [CARAMBA] (http://www.medsci.uu.se/caramba/) team at Uppsala University and the main products used in the analsysis workflow are [Docker] (https://www.docker.com/what-docker), [Jenkins] (https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [MANTL] (https://mantl.io/).
+In this repository we aim to introduce a microservice-based infrastructure for analysis of metabolomics data, through a series of examples that we encourage you to try yourself. The data used has been provided by the [CARAMBA] (http://www.medsci.uu.se/caramba/) team at Uppsala University. 
+
+The main products used here are [Docker] (https://www.docker.com/what-docker), [Jenkins] (https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [MANTL] (https://mantl.io/).
 
 >**Note**
->If you are not familiar with the concept of Docker or Mesosphere, please take a brief look at the following websites: [What is Docker?] (https://www.docker.com/what-docker),  [Meet Jenkins] (https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [mantl.io] (https://mantl.io/).
+>If you are not familiar with this products, please take a brief look at the following websites: [What is Docker?] (https://www.docker.com/what-docker),  [Meet Jenkins] (https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [mantl.io] (https://mantl.io/).
 
 ## Prerequisites
 
 * Please sign up on [DockerHub](https://hub.docker.com/).
 * Please sign up on [GitHub](https://github.com).
-* Please make sure that your [Google Cloud Platform](https://cloud.google.com/) account has write access to the [PhenoMeNal](https://console.cloud.google.com/compute/instances?project=phenomenal-1145) project. In addition, you will need a *Phenomenal-credentials.json* file that will be distributed the day of the workshop, in order to fire up VMs using Terraform.
-* Please download and import our [VirtualBox](https://www.virtualbox.org/) image: [microservices-workshop.ova](https://www.dropbox.com/s/42olu24n1nmq6x4/microservices-workshop.ova?dl=0). In this tutorial we assume that you run all of the commands using this image, so please make sure to import it and to configure it properly. 
+* Please make sure that your [Google Cloud Platform](https://cloud.google.com/) account has write access to the [PhenoMeNal](https://console.cloud.google.com/compute/instances?project=phenomenal-1145) project. In addition, you will need a *Phenomenal-credentials.json* file. This file will be distributed during the workshop in Uppsala.
+* Please download and import our [VirtualBox](https://www.virtualbox.org/) image: [microservices-workshop.ova](https://www.dropbox.com/s/42olu24n1nmq6x4/microservices-workshop.ova?dl=0) (**username**: phenomenal, **password**: sclifelab). In this tutorial we assume that you run all of the commands using this image, so please make sure to import it and to configure it properly. 
 
 >**Note**
 >This is a configured Ubuntu 14.04 LTS with all of the software you need in this tutorial: [Terraform](https://www.terraform.io/), [MANTL dependecies](https://github.com/CiscoCloud/mantl/blob/master/requirements.txt), [Jenkins](https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [Docker](https://www.docker.com/what-docker).
 
-Once you imported the image in VirtualBox you will need to open a terminal and generate an ssh-key.
+Once you imported the image in VirtualBox you need to open a terminal and generate an ssh-key.
 
 ```bash
 mkdir ~/.ssh
@@ -26,7 +28,7 @@ chmod 700 ~/.ssh
 ssh-keygen -t rsa
 ```
 
-Furthermore, you will have to setup your git user.
+Furthermore, you have to setup your git user.
 
 ```bash
 git config --global user.email "myname@example.com"
@@ -37,13 +39,17 @@ Finally, please copy the *Phenomenal-credentials.json* file under the home direc
 
 ## How to develop a simple R-based microservice
 
-In this session follows a tutorial on how to develop and integrate a R-based microservice and share it on GitHub.
+When migrating your monolitic workflow to a microservice-based infrastructure, you will have to split it in smaller, interchangeable, tasks. This is anyway a general good practice to follow when you develope your software, that will promote *separation of concern* and reusability. 
 
-###Dockerize an R script
+Here we propose a microservice infrastructure based on MANTL. In MANTL, complex applications are built deploying Docker containers that act as microservices. When separating your application in Docker containers, it is important to find a good strategy to share data between them. In MANTL, [GlusterFS](https://www.gluster.org/) is used to provide a distributed filesystem where containers, that can potentially run on different nodes, can share data. Therefore, you can assume that each microservice in a complex workflow reads the input, and it writes the output, form some volume that will be mounted by MANTL. 
 
-When wrapping your R script in a Docker image you will need two files, your **R script file** and a **Dockerfile**, containing all the commands needed to assemble an image.
+Here we use a workflow by the Kultima lab as benchmark. In this tutorial you will deploy your very own MANTL cluster, and run this workflow using an interactive Jupyter [notebook](https://github.com/phnmnl/workflow-demo/blob/master/Jupyter/Workflow.ipynb). Please give a quick look to it before to proceed with the next section. 
 
-In this tutorial we will use one of the smallest services in this pipeline, the log2transformation. This process will take intensity data as an input using the commandArgs function in R and transform the data to log2 base scale. The missing values will be further imputed by zeros and the data exported with the desired name given.
+###Develope microservices with Docker
+
+In this section we show how to wrap a simple R-script in a Docker image, that can act as a microservice in a more complex workflow. For the best learning experience, we recommend that you repeat every step on your own.  
+
+Here we use one of the smallest services in the benchmark pipeline, the [log2transformation](https://github.com/phnmnl/workflow-demo/tree/master/log2transformation). This process will take intensity data as an input, and transform it to the log2 base scale. The missing values will be further imputed by zeros. Please notice that in this R script, the data is read/write from/to the disk.
 
 ```R
 args <- commandArgs(trailingOnly = TRUE)
@@ -58,7 +64,7 @@ samples[is.na(samples)]=0
 write.table(samples,file=output,sep='\t',row.names=F)
 ```
 
-In the Dockerfile you first provide which base image that you want to start **FROM**. If doing a R-based service, like we are, the base image *r-base* is a good one to start from. Further you provide the **MAINTAINER**, you **ADD** your R script and **ENTRYPOINT**, which tells the image what action to do.
+All you need to do in order to wrap this script in a Docker image is to write a [Dockerfile](https://docs.docker.com/engine/reference/builder/). An example follows.
 
 ```Docker
 FROM r-base
@@ -68,19 +74,26 @@ ADD log2transformation.r /
 ENTRYPOINT ["Rscript", "log2transformation.r"]
 ```
 
-Before sharing your docker image on GitHub you may want to check that it does what it is supposed to do. In order to do that you first need to build your image, using the following command. To tag your image the -t flag may be used, followed by the name you desire.
+In the Dockerfile you first specify a base image that you want to start **FROM**. If you are working to an R-based service, like we are doing, the base image *r-base* is a good choice, as it includes all of the dependencies you need to run your script. Then, you provide the **MAINTAINER**, that is typically your name and a contact.
+
+The last two lines in our simple Docker file are the most important. The **ADD** instruction serves to add a file in the build context to a directory in your Docker image. In fact, we use it to add our *log2transformation.r* script in the root directory. Finally, the *ENTRYPOINT* instruction, specifies which command to run when the container will be started. Off course, we use it to run our script.
+
+When you are done with the Dockerfile, you need to build the image. The `docker build` command does the job. 
 
 ```
 $ docker build -t log2transformation .
 ```
 
-If everything works fine it will say that the image was successfully built.
+In the previous command we build the image, naming it *log2transformation*, and specifying the current directory as the build context. To successfully run this command, it is very important that the build context, the current directory, contains both the *Dockerfile* and the *log2transformation.r* script. If everything works fine it will say that the image was successfully built.
+
+The `docker run` command serves to run a service that has been previously built. 
+
+```
+$ docker run -v /host/directory/data:/data log2transformation /data/inputdata_.xls /data/output.xls
+```
 
 To run your service you need to provide it with the name of your input and output files and you need to add a data volume to your image containging your input file. To add/create a volume you use the -v flag followed by the path/to/your/file:path/in/image.
 
-```
-$ docker run -v /home/workflow-demo/log2transformation/data:/data log2transformation /data/data.xls /data/output.xls
-```
 ###Share your microservice source code on GitHub
 
 When you are satisfied with your Docker image you may want to share or store your code on GitHub. This is easly done using some basic git commands.
