@@ -13,6 +13,7 @@ The main products used here are [Docker] (https://www.docker.com/what-docker), [
 ## Table of contents
 
 - [Prerequisites](#prerequisites)
+- [How to develop a simple R-based microservice] (#how-to-develop-a-simple-r-based-microservice)
 
 ## Prerequisites
 
