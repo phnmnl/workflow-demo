@@ -152,13 +152,13 @@ To configure this item to build your image, click on *"Add build step"*, choose 
   <img src="http://i64.tinypic.com/2mo4bat.png" width="750"/>
 </p>
 
-To push the resulting image to GitHub, add another build step, but this time select the *"Push image"*. Then, specify the *"Name of the image to push"*, that is *<dockerhub-user>/servicename*, and the *"Docker registry URL"*: https://index.docker.io/v1/.
+To push the resulting image to GitHub, add another build step, but this time select the *"Push image"*. Then, specify the *"Name of the image to push"*, that is *<dockerhub-user>/servicename*, and the *"Docker registry URL"*: https://index.docker.io/v1/. Off course, you need to provide the credentials for the *<dockerhub-user>* that you specified. In order to do that click on "Add", close to *"Registry credentials"*, fill up the form that will show up, and finally select the credentials that you just created. 
 
 <p align="center">
   <img src="http://i67.tinypic.com/2nja42e.png" width="750"/>
 </p>
 
-Finally, push save. your will now be redirected to the items main page. To start the building push "Build now" in the top left corner (The rebuilding/updating will be done automatically after the initial build).
+Finally, save your item, and you will be redirected to the items main page. To trigger the build, click on *"Build now"* in the top left corner. A new item will appear in the *"Build History"*, and you will be able to click on it to get some statistics.  
 
 <p align="center">
   <img src="http://i63.tinypic.com/qn5oav.png" width="750"/>
