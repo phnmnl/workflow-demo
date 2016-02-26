@@ -86,15 +86,15 @@ $ docker build -t log2transformation .
 
 In the previous command we build the image, naming it *log2transformation*, and specifying the current directory as the build context. To successfully run this command, it is very important that the build context, the current directory, contains both the *Dockerfile* and the *log2transformation.r* script. If everything works fine it will say that the image was successfully built.
 
-The `docker run` command serves to run a service that has been previously built. 
+The `docker run` command serves to run a service that has been previously built. You can use this [input data](https://raw.githubusercontent.com/phnmnl/workflow-demo/master/data/log2_input.xls) to try out the following command.
 
 ```
-$ docker run -v /host/directory/data:/data log2transformation /data/inputdata_.xls /data/output.xls
+$ docker run -v /host/directory/data:/data log2transformation /data/log2_input.xls /data/log2_output.xls
 ```
 
-In the previous command 
+In the previous command we use the `-v` argument to specify a directory on our host machine, that will be mount on the Docker container. This directory is supposed to contain the [log2_input.xls](https://raw.githubusercontent.com/phnmnl/workflow-demo/master/data/log2_input.xls) file. Then we specify the name of the container that we aim to run (*log2transformation*), and the arguments that will be passed to the entry point command. We mounted the host direcory under */data* in the Docker container, hence we use the arguments to instruct the R script to read/write the input from/to it.    
 
-To run your service you need to provide it with the name of your input and output files and you need to add a data volume to your image containging your input file. To add/create a volume you use the -v flag followed by the path/to/your/file:path/in/image.
+You can read more on how to develope Docker images on the Docker [documentation](https://docs.docker.com/). 
 
 ###Share your microservice source code on GitHub
 
