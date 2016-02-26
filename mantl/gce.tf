@@ -20,6 +20,8 @@ provider "google" {
 module "gce-network" {
  source = "./terraform/gce/network"
  network_ipv4 = "10.0.0.0/16"
+ long_name = "${var.long_name}"
+ short_name= "${var.short_name}"
 }
 
 # retmote state example
