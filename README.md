@@ -146,13 +146,13 @@ In the next step you will find a long list of settings. Check the GitHub project
 
 To make the integration automatic, check the "Build when a change is pushed to GitHub". In this way Jenkins will expose a *webhook* that GitHub can use to trigger the build. This means that you need to [configure the Jenkins webhook on GitHub](http://learning-continuous-deployment.github.io/jenkins/github/2015/04/17/github-jenkins/). For the purpose of this tutorial you can skip this, and trigger the build manually. 
 
-To configure this item to build your image, click on "Add build step", choose "Execute Docker command", and select the "Create/build image" command. Add the "Build context folder", that is the folder where the Docker context is save. Setting this field to "$WORKSPACE" is enough if you saved the Docker context in the root of your repository. If you saved the Docker context in a different folder, you need to specify the path to it (e.g. "$WORKSPACE/context"). It is also very important to name the "Tag of the resulting docker image" properly. In fact, to successfully push to DockerHub, the tag will have to be in the form: '<dockerhub-user>/servicename'.
+To configure this item to build your image, click on *"Add build step"*, choose *"Execute Docker command"*, and select the *"Create/build image"* command. Add the *"Build context folder"*, that is the folder where the Docker context is save. Setting this field to *"$WORKSPACE"* is enough if you saved the Docker context in the root of your repository. If you saved the Docker context in a different folder, you need to specify the path to it (e.g. *"$WORKSPACE/context"*). It is also very important to name the *"Tag of the resulting docker image"* properly. In fact, to successfully push to DockerHub, the tag will have to be in the form: `<dockerhub-user>/servicename`.
 
 <p align="center">
   <img src="http://i64.tinypic.com/2mo4bat.png" width="750"/>
 </p>
 
-Add "Push image" as a second Docker command, passing again the name of your Docker image and the Docker registry URL.
+To push the resulting image to GitHub, add another build step, but this time select the *"Push image"*. Then, specify the *"Name of the image to push"*, that is *<dockerhub-user>/servicename*, and the *"Docker registry URL"*: https://index.docker.io/v1/.
 
 <p align="center">
   <img src="http://i67.tinypic.com/2nja42e.png" width="750"/>
