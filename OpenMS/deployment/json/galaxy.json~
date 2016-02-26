@@ -1,0 +1,18 @@
+{
+	"cpus": 0.25, 
+	"mem": 128,
+	"id": "galaxy",
+	"instances": 1,
+	"container": {
+    		"type": "DOCKER",
+    		"docker": {
+      			"image": "bgruening/galaxy-stable",
+      			"network": "BRIDGE",
+			"portMappings": [{
+                    		"containerPort": 80,
+                    		"hostPort": 0,
+                    		"protocol": "tcp"
+                	}]
+    		}
+	}		
+}

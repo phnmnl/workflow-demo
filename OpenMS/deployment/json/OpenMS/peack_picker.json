@@ -1,0 +1,18 @@
+{ 
+	"schedule" : "R0/2016-01-01T12:00:00Z/PT1H",  
+	"epsilon" : "PT10M",  
+	"name" : "peack-picker",
+	"container": {
+   		"type": "DOCKER",
+   		"image": "mcapuccini/openms",
+		 "volumes": [{
+         	 	"containerPath": "/mnt/mass_spec/",
+        	 	"hostPath": "/home/vagrant/shared/mass_spec/",
+        	 	"mode": "RW"
+      		 }]
+ 	},
+ 	"cpus": "0.25",
+ 	"mem": "128",   
+	"command" : "/entrypoint.sh pp /mnt/mass_spec/Alben_raw /mnt/mass_spec/peacks",  
+	"owner" : "marco@example.com"
+}
