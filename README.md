@@ -58,14 +58,14 @@ samples[is.na(samples)]=0
 write.table(samples,file=output,sep='\t',row.names=F)
 ```
 
-In the Dockerfile you first provide which base image that you want to start **FROM**. If doing a R-based service, like we are, the base image *r-base* is a good one to start from. Further you provide the **MAINTAINER**, youn **ADD** your R script and **ENTERYPOINT**, which tells the image what action to do.
+In the Dockerfile you first provide which base image that you want to start **FROM**. If doing a R-based service, like we are, the base image *r-base* is a good one to start from. Further you provide the **MAINTAINER**, you **ADD** your R script and **ENTRYPOINT**, which tells the image what action to do.
 
 ```Docker
 FROM r-base
 MAINTAINER Stephanie Herman, stephanie.herman.3820@student.uu.se
 
 ADD log2transformation.r /
-ENTRYPOINT ["Rscript", "log2transformation.r"] 
+ENTRYPOINT ["Rscript", "log2transformation.r"]
 ```
 
 Before sharing your docker image on GitHub you may want to check that it does what it is supposed to do. In order to do that you first need to build your image, using the following command. To tag your image the -t flag may be used, followed by the name you desire.
@@ -83,7 +83,7 @@ $ docker run -v /home/workflow-demo/log2transformation/data:/data log2transforma
 ```
 ###Share your microservice source code on GitHub
 
-When you are satisfied with your Docker image you may want to share or store your code on GitHub. This is easly done using some basic git commands. 
+When you are satisfied with your Docker image you may want to share or store your code on GitHub. This is easly done using some basic git commands.
 
 First you have to create your destnation repository on GitHub. Once done you need to clone your repository to your local host using the git command *clone*.
 
@@ -118,6 +118,43 @@ $ git push
 If you further want to upload your image on [DockerHub] (https://hub.docker.com/) and have continous integration using Jenkins, you first need to register an account DockerHub and Jenkins respectively. Once this is done you can start with creating your project in Jenkins. For continous integration between GitHub and DockerHub you will need one Jenkins item per microservice.
 
 In the Jenkins items configurations you need to provide the url for your GitHub project. You further needs to choose the build trigger "Build when change is pushed to GitHub", since you want your changes to be integrated in DockerHub. When building you intially want your Jenkins action to Create/build your image and then further push your image to your DockerHub repository. Make sure that the images tag is consitent throughout the actions. When everything is filled in correctly and saved, cross your fingers and push the "Star building now" button. To see the console output, you can enter the current building action and you will find a button for this on your left.
+
+To create a new Jenkins item push the "Create new item" button in the top left corner. 
+
+<p align="center">
+  <img src="http://i67.tinypic.com/2qkrw3k.png" width="750"/>
+</p>
+
+Choose "Freestyle project" and name your item.
+
+<p align="center">
+  <img src="http://i64.tinypic.com/14se62r.png" width="750"/>
+</p>
+
+In the next step you will find a long list of settings. First, pass the URL to your GitHub project and check the Git box below Source Code Management.
+
+<p align="center">
+  <img src="http://i63.tinypic.com/2zzqddk.png" width="750"/>
+</p>
+
+
+To make the integration automatic, check the "Build when a change is pushed to GitHub" box and below "Build" choose "Execute Docker command" and add "Create/add image" as the first building-step. Add the context folder (the name of the GitHub folder of your item) and name the Docker image.
+
+<p align="center">
+  <img src="http://i64.tinypic.com/2mo4bat.png" width="750"/>
+</p>
+
+Add "Push image" as a second Docker command, passing again the name of your Docker image and the Docker registry URL.
+
+<p align="center">
+  <img src="http://i67.tinypic.com/2nja42e.png" width="750"/>
+</p>
+
+Finally, push save. your will now be redirected to the items main page. To start the building push "Build now" in the top left corner (The rebuilding/updating will be done automatically after the initial build).
+
+<p align="center">
+  <img src="http://i63.tinypic.com/qn5oav.png" width="750"/>
+</p>
 
 ## How to deploy MANTL
 [MANTL](http://mantl.io/) is a modern platform for rapidly deploying globally distributed services. The MANTL project defines a set of [Terraform](https://www.terraform.io/) and [Ansible](https://www.ansible.com/) configuration files to rapidly deploy a microservices infrastructure on many cloud providers. In this section we cover how to deploy a MANTL cluster on the PhenoMeNal project in the Google Cloud Engine (GCE).

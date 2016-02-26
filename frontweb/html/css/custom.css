@@ -1,0 +1,141 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+
+body {
+  /* this padding is important to stay away from navbar */
+  padding-top: 50px; 
+  padding-bottom: 20px;
+  padding-right: 15px;
+  padding-left: 30px;
+  color: #5a5a5a;
+}
+
+input[readonly].form-control, textarea[readonly].form-control {
+    background-color: #fff;
+    /* any other styles */
+}
+
+.datepicker table tr td.day:hover,
+.datepicker table tr td.focused {
+  background: #adceeb;
+}
+
+.well-white{
+    background: #fff;
+    font-size: 12px;
+}
+
+select.form-control {
+  padding: 0px;
+}
+
+.nofocus:focus{
+    border-color: #cccccc;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+} 
+
+.contentwrap {
+  padding-right: 30px;
+  padding-left: 0px;
+}
+
+.formwrap {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+.tablewrap {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+/*  center modal */
+.modal {
+  text-align: center;
+  padding: 0;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px; /* Adjusts for spacing */
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.modal.in {
+   display:block;
+}
+
+.loginModal {
+	bottom:200px;
+	right:0px;
+}
+
+.loginModal .modal-dialog  {
+	width:270px;
+}
+
+.loginModal .modal-header {
+  border-bottom: 0px solid #e5e5e5;
+}
+
+
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+
+
+/* Flip around the padding for proper display in narrow viewports */
+.navbar-wrapper > .container {
+  padding-right: 0;
+  padding-left: 0;
+}
+.navbar-wrapper .navbar {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+.navbar-wrapper .navbar .container {
+  width: auto;
+}
+
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 20;
+  font-size: 14px;
+}
+
+.navbar-nav > li > a {padding-top:8px !important; padding-bottom:6px !important;}
+.navbar {min-height:30px !important}
+
+
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 568px) {
+  /* Navbar positioning foo */
+  .navbar-wrapper {
+    margin-top: 20px;
+  }
+  .navbar-wrapper .container {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+  .navbar-wrapper .navbar {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+
+}
