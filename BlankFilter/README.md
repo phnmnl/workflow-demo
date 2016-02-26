@@ -18,5 +18,5 @@ $ docker build -t blankfilter .
 To run the service you need to provide it with the names of your input and output files and you need to add a data volume to your image containing your input file. 
 
 ```
-$ docker run -v /home/workflow-demo/BlankFilter/dataLocation:/data blankfilter /data/inputdata.xls /data/output_blankfilter.xls
+$ docker run -v /home/workflow-demo/BlankFilter/localDataLocation:/destinationLocation blankfilter /destinationLocation/inputdata.xls /destinationLocation/output_blankfilter.xls
 ```
