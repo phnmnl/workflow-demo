@@ -98,9 +98,9 @@ You can read more on how to develope Docker images on the Docker [documentation]
 
 ###Share your microservice source code on GitHub
 
-When you are satisfied with your Docker image, it is good practice to share the Dockerfile and and all of the code to build it on GitHub. This can be easly done using some basic git commands.
+When you are satisfied with your Docker image, it is good practice to share the Dockerfile and and all of the Docker context on GitHub. This can be easly done using some basic git commands.
 
-First you need to [create a repository on GitHub](https://help.github.com/articles/create-a-repo/), and [clone the repository](https://help.github.com/articles/cloning-a-repository/) to your local host. Next up, following our previour R-based example, is to copy your Dockerfile and your R script into the repository folder that you just cloned.
+First you need to [create a repository on GitHub](https://help.github.com/articles/create-a-repo/), and to [clone the repository](https://help.github.com/articles/cloning-a-repository/) to your local host. Next up, following our previour R-based example, is to copy your Dockerfile and your R script into the repository folder that you just cloned.
 
 Then, locate into the repository, and add the files to be tracked.
 
