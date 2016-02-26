@@ -13,7 +13,13 @@ The main products used here are [Docker] (https://www.docker.com/what-docker), [
 ## Table of contents
 
 - [Prerequisites](#prerequisites)
-- [How to develop a simple R-based microservice] (#how-to-develop-a-simple-r-based-microservice)
+- [How to develop a simple R-based microservice](#how-to-develop-a-simple-r-based-microservice)
+	- [Develope microservices with Docker](#develope-microservices-with-docker)
+	- [Share your microservice source code on GitHub](#share-your-microservice-source-code-on-github)
+	- [Continous integration with Jenkins](#continous-integration-with-jenkins)
+- [How to deploy MANTL](#how-to-deploy-mantl)
+- [Deploy long-lasting microservices on Marathon](#deploy-long-lasting-microservices-on-marathon)
+- [Deploy microservices workflows using Chronos](#deploy-microservices-workflows-using-chronos)
 
 ## Prerequisites
 
