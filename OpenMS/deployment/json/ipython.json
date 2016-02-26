@@ -1,0 +1,22 @@
+{
+	"cpus": 0.25, 
+	"mem": 128,
+	"id": "ipython",
+	"instances": 1,
+	"container": {
+    		"type": "DOCKER",
+    		"docker": {
+      			"image": "ipython/notebook",
+      			"network": "BRIDGE",
+			"portMappings": [{
+                    		"containerPort": 8888,
+                    		"hostPort": 0,
+                    		"protocol": "tcp"
+                	}],
+			"parameters": [
+                		{ "key": "env", "value": "PASSWORD=phenomenal" },
+                		{ "key": "env", "value": "USE_HTTP=1" }
+            		]
+    		}
+	}		
+}

@@ -1,0 +1,18 @@
+{ 
+	"parents" : ["peack-picker"],
+	"epsilon" : "PT10M",  
+	"name" : "feature-finder",
+	"container": {
+   		"type": "DOCKER",
+   		"image": "mcapuccini/openms",
+		 "volumes": [{
+         	 	"containerPath": "/mnt/mass_spec/",
+        	 	"hostPath": "/home/vagrant/shared/mass_spec/",
+        	 	"mode": "RW"
+      		 }]
+ 	},
+ 	"cpus": "0.25",
+ 	"mem": "128",   
+	"command" : "/entrypoint.sh ff /mnt/mass_spec/peacks /mnt/mass_spec/features",  
+	"owner" : "marco@example.com"
+}
