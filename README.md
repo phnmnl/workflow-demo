@@ -92,6 +92,8 @@ The `docker run` command serves to run a service that has been previously built.
 $ docker run -v /host/directory/data:/data log2transformation /data/inputdata_.xls /data/output.xls
 ```
 
+In the previous command 
+
 To run your service you need to provide it with the name of your input and output files and you need to add a data volume to your image containging your input file. To add/create a volume you use the -v flag followed by the path/to/your/file:path/in/image.
 
 ###Share your microservice source code on GitHub
