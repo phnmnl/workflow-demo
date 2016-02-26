@@ -122,11 +122,11 @@ $ git push
 
 ###Continous integration with Jenkins
 
-If you further want to upload your image on [DockerHub] (https://hub.docker.com/) and have continous integration using Jenkins, you first need to register an account DockerHub and Jenkins respectively. Once this is done you can start with creating your project in Jenkins. For continous integration between GitHub and DockerHub you will need one Jenkins item per microservice.
+[Jenkins](https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) is a convenient Continous Integration (CI) tool that can be used to automate Docker builds. A typical use case is to share the Docker context of your appliance on GitHub, and to configure Jenkins to trigger a build every time there is a change on your master branch. Furthermore, Jenkins can automatically push the built images on DockerHub, so that your users can run them out-of-the-box.    
 
-In the Jenkins items configurations you need to provide the url for your GitHub project. You further needs to choose the build trigger "Build when change is pushed to GitHub", since you want your changes to be integrated in DockerHub. When building you intially want your Jenkins action to Create/build your image and then further push your image to your DockerHub repository. Make sure that the images tag is consitent throughout the actions. When everything is filled in correctly and saved, cross your fingers and push the "Star building now" button. To see the console output, you can enter the current building action and you will find a button for this on your left.
+In the VM image that we provided in the prerequisites section, there is a Jenkins server running on [http://localhost:8080/](http://localhost:8080/).
 
-To create a new Jenkins item push the "Create new item" button in the top left corner. 
+A Jenkins item defines how to perform a build of an application. To create a new Jenkins item click on "New item". 
 
 <p align="center">
   <img src="http://i67.tinypic.com/2qkrw3k.png" width="750"/>
@@ -138,26 +138,27 @@ Choose "Freestyle project" and name your item.
   <img src="http://i64.tinypic.com/14se62r.png" width="750"/>
 </p>
 
-In the next step you will find a long list of settings. First, pass the URL to your GitHub project and check the Git box below Source Code Management.
+In the next step you will find a long list of settings. Check the GitHub project checkbox, and insert the URL to your repository. Then, further down, select Git under source management and insert the repository URL again. This second setting is very important, as the URL that you insert here will be used by Jenkins to clone your repository. 
 
 <p align="center">
   <img src="http://i63.tinypic.com/2zzqddk.png" width="750"/>
 </p>
 
+To make the build automatic, check "Build when a change is pushed to GitHub". In this way Jenkins will expose a *webhook* that GitHub can use to trigger the builds. This means that you need to [configure the Jenkins webhook on GitHub](http://learning-continuous-deployment.github.io/jenkins/github/2015/04/17/github-jenkins/). For the purpose of this tutorial you can skip this step, and you can trigger the build manually. 
 
-To make the integration automatic, check the "Build when a change is pushed to GitHub" box and below "Build" choose "Execute Docker command" and add "Create/add image" as the first building-step. Add the context folder (the name of the GitHub folder of your item) and name the Docker image.
+In order to configure Jenkins to build your image, click on *"Add build step"*, choose *"Execute Docker command"*, and select the *"Create/build image"* command. Add the *"Build context folder"*, that is the folder where the Docker context is saved. Setting this field to *"$WORKSPACE"* is enough if you saved the Docker context in the root of your repository. If you saved the Docker context in a different folder, you need to specify the path to it (e.g. *"$WORKSPACE/context"*). It is also very important to name the *"Tag of the resulting docker image"* properly. In fact, to successfully push to DockerHub, the tag will have to be in the form: `<dockerhub-user>/servicename`.
 
 <p align="center">
   <img src="http://i64.tinypic.com/2mo4bat.png" width="750"/>
 </p>
 
-Add "Push image" as a second Docker command, passing again the name of your Docker image and the Docker registry URL.
+To push the resulting image to GitHub, add another build step, but this time select the *"Push image"*. Then, specify the *"Name of the image to push"*, that is *<dockerhub-user>/servicename*, and the *"Docker registry URL"*: https://index.docker.io/v1/. Off course, you need to provide the credentials for the *<dockerhub-user>* that you specified. In order to do that click on "Add", next to *"Registry credentials"*, fill up the form that will show up, and finally select the credentials that you just created. 
 
 <p align="center">
   <img src="http://i67.tinypic.com/2nja42e.png" width="750"/>
 </p>
 
-Finally, push save. your will now be redirected to the items main page. To start the building push "Build now" in the top left corner (The rebuilding/updating will be done automatically after the initial build).
+Finally, save your item, and you will be redirected to the items main page. To trigger the build, click on *"Build now"* in the top left corner. A new item will appear in the *"Build History"*, and you will be able to click on it to get some statistics.  
 
 <p align="center">
   <img src="http://i63.tinypic.com/qn5oav.png" width="750"/>
