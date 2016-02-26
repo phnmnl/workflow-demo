@@ -322,7 +322,7 @@ The format of this json is defined in the [Marathon REST API documentation](http
 
 **N.B.** Due to an issue (https://github.com/CiscoCloud/mantl/issues/1142), the Jupyter working directory won't be writable on GlusterFS. To fix this we need to ssh into a node and change the ownership of it. 
 
-```
+```bash
 ssh centos@control.myname.phenomenal.cloud
 sudo chown centos /mnt/container-volumes/jupyter/
 exit # closes the ssh connection
