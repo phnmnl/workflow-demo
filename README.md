@@ -350,6 +350,8 @@ We prepared a Jupyter interactive notebook that you can use to get started with 
 
 When you are done with your testing, you can run the following command to delete your MANTL cluster. 
 
-`terraform destroy`
+```bash
+terraform destroy
+```
 
 It is very important that you don't leave your cluster up and running, if you are not using it, otherwise we will waste GCE credits. 
