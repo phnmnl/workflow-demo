@@ -122,11 +122,11 @@ $ git push
 
 ###Continous integration with Jenkins
 
-If you further want to upload your image on [DockerHub] (https://hub.docker.com/) and have continous integration using Jenkins, you first need to register an account DockerHub and Jenkins respectively. Once this is done you can start with creating your project in Jenkins. For continous integration between GitHub and DockerHub you will need one Jenkins item per microservice.
+[Jenkins](https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) is a convenient Continous Integration (CI) tool that can be used to automate Docker builds. A typical use case is to have the Docker context of your appliance on GitHub, and to configure Jenkins to trigger a build every time there is a change on your master branch. Furthermore, Jenkins can automatically push the built images on DockerHub, so that your users can run them out-of-the-box.    
 
-In the Jenkins items configurations you need to provide the url for your GitHub project. You further needs to choose the build trigger "Build when change is pushed to GitHub", since you want your changes to be integrated in DockerHub. When building you intially want your Jenkins action to Create/build your image and then further push your image to your DockerHub repository. Make sure that the images tag is consitent throughout the actions. When everything is filled in correctly and saved, cross your fingers and push the "Star building now" button. To see the console output, you can enter the current building action and you will find a button for this on your left.
+In the VM image that we provided in the prerequisites section, there is a Jenkins server running on [http://localhost:8080/](http://localhost:8080/).
 
-To create a new Jenkins item push the "Create new item" button in the top left corner. 
+A Jenkins item defines the step to perform a build of an appliance. To create a new Jenkins item push the "Create new item" button in the top left corner. 
 
 <p align="center">
   <img src="http://i67.tinypic.com/2qkrw3k.png" width="750"/>
