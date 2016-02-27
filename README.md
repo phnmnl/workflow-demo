@@ -1,4 +1,4 @@
-#Microservices-based metabolomics workflow
+#Microservices-based infrastructure for metabolomics
 
 Microservices is a software architecture style in which complex applications are divided into smaller, more narrow services. These constricted processes are independently deployable and compatible with one another like building blocks. In this manner, these blocks can be combined in multiple ways, creating pipelines of actions.
 
