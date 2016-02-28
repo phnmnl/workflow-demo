@@ -14,9 +14,9 @@ The main products used here are [Docker] (https://www.docker.com/what-docker), [
 
 - [Prerequisites](#prerequisites)
 - [How to develop a simple R-based microservice](#how-to-develop-a-simple-r-based-microservice)
-	- [Develope microservices with Docker](#develope-microservices-with-docker)
+	- [Develop microservices with Docker](#develop-microservices-with-docker)
 	- [Share your microservice source code on GitHub](#share-your-microservice-source-code-on-github)
-	- [Continous integration with Jenkins](#continous-integration-with-jenkins)
+	- [Continuous integration with Jenkins](#continuous-integration-with-jenkins)
 - [How to deploy MANTL](#how-to-deploy-mantl)
 - [Deploy long-lasting microservices on Marathon](#deploy-long-lasting-microservices-on-marathon)
 - [Deploy microservices workflows using Chronos](#deploy-microservices-workflows-using-chronos)
@@ -30,9 +30,9 @@ The main products used here are [Docker] (https://www.docker.com/what-docker), [
 * Please download and import our [VirtualBox](https://www.virtualbox.org/) image: [microservices-workshop.ova](https://www.dropbox.com/s/42olu24n1nmq6x4/microservices-workshop.ova?dl=0) (**username**: phenomenal, **password**: sclifelab). In this tutorial we assume that you run all of the commands using this image, so please make sure to import it and to configure it properly. 
 
 >**Note**
->This is a configured Ubuntu 14.04 LTS with all of the software you need in this tutorial: [Terraform](https://www.terraform.io/), [MANTL dependecies](https://github.com/CiscoCloud/mantl/blob/master/requirements.txt), [Jenkins](https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [Docker](https://www.docker.com/what-docker).
+>This VirtualBox image is a configured Ubuntu 14.04 LTS with all of the software you need in this tutorial: [Terraform](https://www.terraform.io/), [MANTL dependecies](https://github.com/CiscoCloud/mantl/blob/master/requirements.txt), [Jenkins](https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [Docker](https://www.docker.com/what-docker).
 
-Once you imported the image in VirtualBox you need to open a terminal and generate an ssh-key.
+Once you imported and started the image in VirtualBox you need to open a terminal and generate an ssh-key.
 
 ```bash
 mkdir ~/.ssh
@@ -47,17 +47,17 @@ git config --global user.email "myname@example.com"
 git config --global user.name "My Name"
 ```
 
-Finally, please copy the *Phenomenal-credentials.json* file under the home directory `/home/phenomenal`.
+Finally, please copy the *Phenomenal-credentials.json* file under the home directory `/home/phenomenal`. (fom USB-stick)
 
 ## How to develop a simple R-based microservice
 
-When migrating your monolitic workflow to a microservice-based infrastructure, you will have to split it in smaller, interchangeable, tasks. This is anyway a general good practice to follow when you develope your software, that will promote *separation of concern* and reusability. 
+When migrating your monolitic workflow to a microservice-based infrastructure, you will have to split it in smaller, interchangeable, tasks. This is anyway a general good practice to follow when you develop your software, that will promote *separation of concern* and reusability. 
 
 Here we propose a microservice infrastructure based on MANTL. In MANTL, complex applications are built deploying Docker containers that act as microservices. When separating your application in Docker containers, it is important to find a good strategy to share data between them. In MANTL, [GlusterFS](https://www.gluster.org/) is used to provide a distributed filesystem where containers, that can potentially run on different nodes, can share data. Therefore, you can assume that each microservice in a complex workflow reads the input, and it writes the output, form some volume that will be mounted by MANTL. 
 
 Here we use a workflow by the Kultima lab as benchmark. In this tutorial you will deploy your very own MANTL cluster, and run this workflow using an interactive Jupyter [notebook](https://github.com/phnmnl/workflow-demo/blob/master/Jupyter/Workflow.ipynb). Please give a quick look to it before to proceed with the next section. 
 
-###Develope microservices with Docker
+###Develop microservices with Docker
 
 In this section we show how to wrap a simple R-script in a Docker image, that can act as a microservice in a more complex workflow. For the best learning experience, we recommend that you repeat every step on your own.  
 
@@ -88,7 +88,7 @@ ENTRYPOINT ["Rscript", "log2transformation.r"]
 
 In the Dockerfile you first specify a base image that you want to start **FROM**. If you are working to an R-based service, like we are doing, the base image *r-base* is a good choice, as it includes all of the dependencies you need to run your script. Then, you provide the **MAINTAINER**, that is typically your name and a contact.
 
-The last two lines in our simple Docker file are the most important. The **ADD** instruction serves to add a file in the build context to a directory in your Docker image. In fact, we use it to add our *log2transformation.r* script in the root directory. Finally, the *ENTRYPOINT* instruction, specifies which command to run when the container will be started. Off course, we use it to run our script.
+The last two lines in our simple Docker file are the most important. The **ADD** instruction serves to add a file in the build context to a directory in your Docker image. In fact, we use it to add our *log2transformation.r* script in the root directory. Finally, the *ENTRYPOINT* instruction, specifies which command to run when the container will be started. Of course, we use it to run our script.
 
 When you are done with the Dockerfile, you need to build the image. The `docker build` command does the job. 
 
@@ -106,13 +106,13 @@ $ docker run -v /host/directory/data:/data log2transformation /data/log2_input.x
 
 In the previous command we use the `-v` argument to specify a directory on our host machine, that will be mount on the Docker container. This directory is supposed to contain the [log2_input.xls](https://raw.githubusercontent.com/phnmnl/workflow-demo/master/data/log2_input.xls) file. Then we specify the name of the container that we aim to run (*log2transformation*), and the arguments that will be passed to the entry point command. We mounted the host direcory under */data* in the Docker container, hence we use the arguments to instruct the R script to read/write the input from/to it.    
 
-You can read more on how to develope Docker images on the Docker [documentation](https://docs.docker.com/). 
+You can read more on how to develop Docker images on the Docker [documentation](https://docs.docker.com/). 
 
 ###Share your microservice source code on GitHub
 
-When you are satisfied with your Docker image, it is good practice to share the Dockerfile and and all of the Docker context on GitHub. This can be easly done using some basic git commands.
+When you are satisfied with your Docker image, it is good practice to share the Dockerfile and and all of the Docker context on GitHub. This can be easily done using some basic git commands.
 
-First you need to [create a repository on GitHub](https://help.github.com/articles/create-a-repo/), and to [clone the repository](https://help.github.com/articles/cloning-a-repository/) to your local host. Next up, following our previour R-based example, is to copy your Dockerfile and your R script into the repository folder that you just cloned.
+First you need to [create a repository on GitHub](https://help.github.com/articles/create-a-repo/), and to [clone the repository](https://help.github.com/articles/cloning-a-repository/) to your local host. Next up, following our previous R-based example, is to copy your Dockerfile and your R script into the repository folder that you just cloned.
 
 Then, locate into the repository, and add the files to be tracked.
 
@@ -132,9 +132,9 @@ Push your changes to GitHub.
 $ git push
 ```
 
-###Continous integration with Jenkins
+###Continuous integration with Jenkins
 
-[Jenkins](https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) is a convenient Continous Integration (CI) tool that can be used to automate Docker builds. A typical use case is to share the Docker context of your appliance on GitHub, and to configure Jenkins to trigger a build every time there is a change on your master branch. Furthermore, Jenkins can automatically push the built images on DockerHub, so that your users can run them out-of-the-box.    
+[Jenkins](https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) is a convenient Continuous Integration (CI) tool that can be used to automate Docker builds. A typical use case is to share the Docker context of your appliance on GitHub, and to configure Jenkins to trigger a build every time there is a change on your master branch. Furthermore, Jenkins can automatically push the built images on DockerHub, so that your users can run them out-of-the-box.    
 
 In the VM image that we provided in the prerequisites section, there is a Jenkins server running on [http://localhost:8080/](http://localhost:8080/).
 
@@ -164,7 +164,7 @@ In order to configure Jenkins to build your image, click on *"Add build step"*, 
   <img src="http://i64.tinypic.com/2mo4bat.png" width="750"/>
 </p>
 
-To push the resulting image to GitHub, add another build step, but this time select the *"Push image"*. Then, specify the *"Name of the image to push"*, that is *<dockerhub-user>/servicename*, and the *"Docker registry URL"*: https://index.docker.io/v1/. Off course, you need to provide the credentials for the *<dockerhub-user>* that you specified. In order to do that click on "Add", next to *"Registry credentials"*, fill up the form that will show up, and finally select the credentials that you just created. 
+To push the resulting image to GitHub, add another build step, but this time select the *"Push image"*. Then, specify the *"Name of the image to push"*, that is *dockerhub-user/servicename*, and the *"Docker registry URL"*: https://index.docker.io/v1/. You need to provide the credentials for the *dockerhub-user* that you specified. In order to do that click on "Add", next to *"Registry credentials"*, fill up the form that will show up, and finally select the credentials that you just created. 
 
 <p align="center">
   <img src="http://i67.tinypic.com/2nja42e.png" width="750"/>
@@ -260,7 +260,7 @@ Now, before to install the software defined in *phenomenal.yml*, we need to setu
 ./security-setup
 ```
 
-Finally, we are ready to install the sofware via Ansible. Please run the following command.
+Finally, we are ready to install the software via Ansible. Please run the following command.
 
 ```bash
 ansible-playbook -e @security.yml phenomenal.yml # time for another coffee
@@ -294,7 +294,7 @@ cd workflow-demo
 We wrapped the Marathon submit REST call in a small script: [marathon_submit.sh](https://github.com/phnmnl/workflow-demo/blob/master/bin/marathon_submit.sh). You can use it to deploy Jupyter on your MANTL cluster running the following commands.
 
 ```bash
-source bin/set_env.sh #you will asked to enter your control node URL, and admin password
+source bin/set_env.sh #you will asked to enter your control node URL, and admin password (without https://)
 bin/marathon_submit.sh Jupyter/jupyter.json
 ```
 
@@ -330,7 +330,7 @@ The jupyter.json file is sent to Marathon through the REST API, and it defines t
 
 The format of this json is defined in the [Marathon REST API documentation](https://mesosphere.github.io/marathon/docs/rest-api.html). An important remark is that we mount the jupytet working directory under the `/mnt/container-volumes` folder. This is the location where the [GlusterFS](https://www.gluster.org/) distributed filesystem is mounted. Doing so, the Jupyter working directory will be accessible by other microservices, that can potentially run on other resource nodes. 
 
-[Traefik](https://github.com/containous/traefik) is a reverse proxy that runs on the edge nodes, and it provides access to the services deployed via Marathon. Please read a bit about that. If everithing went fine, you should be able to figure out the front end URL of your Jupyter deployment from the Traefik UI (which is linked in the MANTL UI).
+[Traefik](https://github.com/containous/traefik) is a reverse proxy that runs on the edge nodes, and it provides access to the services deployed via Marathon. Please read a bit about that. If everything went fine, you should be able to figure out the front end URL of your Jupyter deployment from the Traefik UI (which is linked in the MANTL UI).
 
 **N.B.** Due to an issue (https://github.com/CiscoCloud/mantl/issues/1142), the Jupyter working directory won't be writable on GlusterFS. To fix this we need to ssh into a node and change the ownership of it. 
 
@@ -345,6 +345,18 @@ We prepared a Jupyter interactive notebook that you can use to get started with 
 
 >**Note**
 >Before going through the notebook, please read a bit about [Chronos](https://mesos.github.io/chronos/).
+
+
+## How to destroy a MANTL cluster
+
+When you are done with your testing, you can run the following command to delete your MANTL cluster. 
+
+```bash
+terraform destroy
+```
+
+It is important that you don't leave your cluster up and running, if you are not using it, otherwise we will waste GCE credits. 
+
 
 ## How to destroy a MANTL cluster
 
