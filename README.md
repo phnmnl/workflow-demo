@@ -200,7 +200,7 @@ git checkout 1.0.2
 First of all we need fire up the VMs on GCE. MANTL uses Terraform to provide cloud hosts provisioning, on multiple cloud providers. This is done through the definition of several Terraform modules, that make MANTL deployment simple and repeatable. However some minimal configuration it is needed (e.g. number of controllers, edges and workers, credentials etc.). For this tutorial we prepared a Terraform configuration file [gce.tf](https://github.com/phnmnl/workflow-demo/blob/master/mantl/gce.tf) that you can download and use. This file needs to be copied in the MANTL home directory, so you can just run the following command.
 
 ```bash
-https://raw.githubusercontent.com/phnmnl/workflow-demo/master/mantl/gce.tf
+wget https://raw.githubusercontent.com/phnmnl/workflow-demo/master/mantl/gce.tf
 ```
 
 In *gce.tf* we define a small development cluster with one control node, one edge node and two resource/worker nodes. You can learn how to define such file reading the [MANTL GCE documentation](http://microservices-infrastructure.readthedocs.org/en/latest/getting_started/gce.html). 
