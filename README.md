@@ -356,14 +356,3 @@ terraform destroy
 ```
 
 It is important that you don't leave your cluster up and running, if you are not using it, otherwise we will waste GCE credits. 
-
-
-## How to destroy a MANTL cluster
-
-When you are done with your testing, you can run the following command to delete your MANTL cluster. 
-
-```bash
-terraform destroy
-```
-
-It is very important that you don't leave your cluster up and running, if you are not using it, otherwise we will waste GCE credits. 
