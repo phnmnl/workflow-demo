@@ -243,7 +243,7 @@ ansible-playbook playbooks/upgrade-packages.yml # go grab a coffee
 MANTL comes with many components, hence we might want to install different subsets of these for different use cases. This is done by defining roles in a root Ansible playbook. We prepared one that you can use for this tutorial. Please download it in the *mantl* folder running the following command.
 
 ```bash
-wget https://raw.githubusercontent.com/phnmnl/workflow-demo/master/Mantl/phenomenal.yml
+wget https://raw.githubusercontent.com/phnmnl/workflow-demo/master/mantl/phenomenal.yml
 ```
 
 Again, to avoid collisions with other users that are running their own cluster on the PhenoMeNal project, we need you to customize this file. Please locate and edit the following line in your *phenomenal.yml* file. 
