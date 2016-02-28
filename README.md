@@ -1,4 +1,4 @@
-#Microservices-based metabolomics workflow
+#Microservices-based infrastructure for metabolomics
 
 Microservices is a software architecture style in which complex applications are divided into smaller, more narrow services. These constricted processes are independently deployable and compatible with one another like building blocks. In this manner, these blocks can be combined in multiple ways, creating pipelines of actions.
 
@@ -20,6 +20,7 @@ The main products used here are [Docker] (https://www.docker.com/what-docker), [
 - [How to deploy MANTL](#how-to-deploy-mantl)
 - [Deploy long-lasting microservices on Marathon](#deploy-long-lasting-microservices-on-marathon)
 - [Deploy microservices workflows using Chronos](#deploy-microservices-workflows-using-chronos)
+- [How to destroy a MANTL cluster](#how-to-destroy-a-mantl-cluster) 
 
 ## Prerequisites
 
@@ -199,7 +200,7 @@ git checkout 1.0.2
 First of all we need fire up the VMs on GCE. MANTL uses Terraform to provide cloud hosts provisioning, on multiple cloud providers. This is done through the definition of several Terraform modules, that make MANTL deployment simple and repeatable. However some minimal configuration it is needed (e.g. number of controllers, edges and workers, credentials etc.). For this tutorial we prepared a Terraform configuration file [gce.tf](https://github.com/phnmnl/workflow-demo/blob/master/mantl/gce.tf) that you can download and use. This file needs to be copied in the MANTL home directory, so you can just run the following command.
 
 ```bash
-https://raw.githubusercontent.com/phnmnl/workflow-demo/master/mantl/gce.tf
+wget https://raw.githubusercontent.com/phnmnl/workflow-demo/master/mantl/gce.tf
 ```
 
 In *gce.tf* we define a small development cluster with one control node, one edge node and two resource/worker nodes. You can learn how to define such file reading the [MANTL GCE documentation](http://microservices-infrastructure.readthedocs.org/en/latest/getting_started/gce.html). 
@@ -242,7 +243,7 @@ ansible-playbook playbooks/upgrade-packages.yml # go grab a coffee
 MANTL comes with many components, hence we might want to install different subsets of these for different use cases. This is done by defining roles in a root Ansible playbook. We prepared one that you can use for this tutorial. Please download it in the *mantl* folder running the following command.
 
 ```bash
-wget https://raw.githubusercontent.com/phnmnl/workflow-demo/master/Mantl/phenomenal.yml
+wget https://raw.githubusercontent.com/phnmnl/workflow-demo/master/mantl/phenomenal.yml
 ```
 
 Again, to avoid collisions with other users that are running their own cluster on the PhenoMeNal project, we need you to customize this file. Please locate and edit the following line in your *phenomenal.yml* file. 
@@ -265,7 +266,7 @@ Finally, we are ready to install the sofware via Ansible. Please run the followi
 ansible-playbook -e @security.yml phenomenal.yml # time for another coffee
 ```
 
-If everything went fine you should be able to access the MANTL UI at: *https://control.yourname.phenomenal.cloud/ui/*. 
+If everything went fine you should be able to reach the MANTL UI at: *https://control.yourname.phenomenal.cloud/ui/*. 
 
 >To access the MANTL UI add a https exception to your browser, and log in as admin using the password that you previously chose.
 
@@ -344,3 +345,13 @@ We prepared a Jupyter interactive notebook that you can use to get started with 
 
 >**Note**
 >Before going through the notebook, please read a bit about [Chronos](https://mesos.github.io/chronos/).
+
+## How to destroy a MANTL cluster
+
+When you are done with your testing, you can run the following command to delete your MANTL cluster. 
+
+```bash
+terraform destroy
+```
+
+It is very important that you don't leave your cluster up and running, if you are not using it, otherwise we will waste GCE credits. 
