@@ -27,7 +27,7 @@ The main products used here are [Docker] (https://www.docker.com/what-docker), [
 * Please sign up on [DockerHub](https://hub.docker.com/).
 * Please sign up on [GitHub](https://github.com).
 * Please make sure that your [Google Cloud Platform](https://cloud.google.com/) account has write access to the [PhenoMeNal](https://console.cloud.google.com/compute/instances?project=phenomenal-1145) project. In addition, you will need a *Phenomenal-credentials.json* file. This file will be distributed during the workshop in Uppsala.
-* Please download and import our [VirtualBox](https://www.virtualbox.org/) image: [microservices-workshop.ova](http://http://pele.farmbio.uu.se/html/microservices-workshop/microservices-workshop.ova) (**username**: phenomenal, **password**: sclifelab). In this tutorial we assume that you run all of the commands using this image, so please make sure to import it and to configure it properly. 
+* Please download and import our [VirtualBox](https://www.virtualbox.org/) image: [microservices-workshop.ova](http://pele.farmbio.uu.se/html/microservices-workshop/microservices-workshop.ova) (**username**: phenomenal, **password**: sclifelab). In this tutorial we assume that you run all of the commands using this image, so please make sure to import it and to configure it properly. 
 
 >**Note**
 >This VirtualBox image is a configured Ubuntu 14.04 LTS with all of the software you need in this tutorial: [Terraform](https://www.terraform.io/), [MANTL dependecies](https://github.com/CiscoCloud/mantl/blob/master/requirements.txt), [Jenkins](https://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins) and [Docker](https://www.docker.com/what-docker).
