@@ -35,7 +35,7 @@ $jupyterHref = substr($jupyterHrefEnvVar, strpos($jupyterHrefEnvVar, "=") + 1);
 	   <div id="tablewrapper" class="tablewrap">
 		 
 		 <div style="padding-left: 5px">
-		    <h3>Available Phenomenal services in Docker hub</h3>
+		    <h3>Available Phenomenal services in DockerHub</h3>
 		 </div>
 
 	     <table class="table table-condensed">
