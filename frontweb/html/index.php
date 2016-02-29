@@ -26,7 +26,6 @@ $jupyterHref = substr($jupyterHrefEnvVar, strpos($jupyterHrefEnvVar, "=") + 1);
 	</div>
 	 </div>
 
-  <br>
 
   <div id="extradiv" style="padding-left: 10px; padding-top: 0px">
        
@@ -36,7 +35,7 @@ $jupyterHref = substr($jupyterHrefEnvVar, strpos($jupyterHrefEnvVar, "=") + 1);
 	   <div id="tablewrapper" class="tablewrap">
 		 
 		 <div style="padding-left: 5px">
-		    <h3>Available Phenomenal services in Docker hub</h3>
+		    <h3>Available Phenomenal services in DockerHub</h3>
 		 </div>
 
 	     <table class="table table-condensed">
@@ -62,18 +61,16 @@ $jupyterHref = substr($jupyterHrefEnvVar, strpos($jupyterHrefEnvVar, "=") + 1);
 	   </div>	<!-- end tablediv -->
 	  </div>
 	 </div> 
-	
-	 <br><br><br>
+
 	
 	<div class='row'>
          <div class="col-sm-10">  
             <a class="btn btn-primary btn-lg" name="return" href="<?=$jupyterHref?>">Go to Jupyter</a>
-            <!-- <a class="disabled btn btn-primary btn-lg" name="return" href="">Go to Galaxy</a> -->
+            <a class="disabled btn btn-primary btn-lg" name="return" href="">Go to Galaxy</a>
          </div>
      </div>
 	 
 	</div> <!-- end extradiv -->
 </div> 
-
 
 <?php require "footer.php" ?>
