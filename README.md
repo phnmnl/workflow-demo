@@ -298,7 +298,7 @@ source bin/set_env.sh #you will asked to enter your control node URL, and admin 
 bin/marathon_submit.sh Jupyter/jupyter.json
 ```
 
-The jupyter.json file is sent to Marathon through the REST API, and it defines the application that we are going yo deploy.
+The jupyter.json file is sent to Marathon through the REST API, and it defines the application that we are going to deploy.
 
 ```json
 {
