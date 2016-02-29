@@ -17,7 +17,7 @@ log2Option<-gsub("-log=","",(args[grepl("-log",args,fixed=T)]),fixed=T)
 
 
 data<-read.table(inputFile,header=T,sep = "\t",stringsAsFactors = F)
-if(pattern!="")
+if(columnPattern!="")
 {
 data<-data[,grepl(names(data),pattern = columnPattern,fixed = T)]
 names(data)<-gsub(columnPattern,"",names(data))
