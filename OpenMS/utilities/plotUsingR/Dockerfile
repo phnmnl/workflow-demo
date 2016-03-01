@@ -6,5 +6,8 @@ RUN Rscript -e "install.packages('ggplot2')"
 RUN Rscript -e "install.packages('dendextend')"
 RUN Rscript -e "install.packages('reshape')"
 RUN Rscript -e "install.packages('dendroextras')"
+RUN Rscript -e "install.packages('ggdendro')"
+
+
 ADD plotMSData.R /
 ENTRYPOINT ["Rscript", "plotMSData.R"] 
