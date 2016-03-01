@@ -39,6 +39,8 @@ library(dendroextras)
 library(reshape)
 library(ggplot2)
 library(Rmisc)
+library(ggdendro)
+
 
 if(toupper(plotType)=="BAR")
 {
@@ -98,9 +100,8 @@ plt<-  ggplot(data = (dataplot), aes(x=variable, y=value)) + geom_boxplot()+
   hc_data=data.frame(data)
   d=dist(cor(hc_data, use="p",method="spearman"))
   hc=hclust(d, method="ward.D")
-  dend <- as.dendrogram(hc)
-  plot(hang.dendrogram(dend),dLeaf = 0)
-  plt<-recordPlot()
+  plt<-ggdendrogram(hc,rotate=T)
+  
 }
 
 if(toupper(imageType)=="JPG")
