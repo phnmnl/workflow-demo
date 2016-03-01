@@ -39,10 +39,10 @@ library(dendroextras)
 library(reshape)
 library(ggplot2)
 library(Rmisc)
+
 if(toupper(plotType)=="BAR")
 {
-  library(reshape)
-  library(ggplot2)plotmsdata
+
   dataplot<-melt(data)
   
   dataInfo<-summarySE(dataplot, measurevar="value", groupvars=c("variable"),na.rm = T)
