@@ -294,7 +294,7 @@ cd workflow-demo
 We wrapped the Marathon submit REST call in a small script: [marathon_submit.sh](https://github.com/phnmnl/workflow-demo/blob/master/bin/marathon_submit.sh). You can use it to deploy Jupyter on your MANTL cluster running the following commands.
 
 ```bash
-source bin/set_env.sh #you will asked to enter your control node URL, and admin password (without https://)
+source bin/set_env.sh #you will asked to enter your control node hostname (without https://), and admin password 
 bin/marathon_submit.sh Jupyter/jupyter.json
 ```
 
